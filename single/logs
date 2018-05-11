@@ -1,0 +1,10 @@
+[INFO]	2018-05-08 16:57:04	LINENO:82	Restoring parameters from best_policy.model
+[INFO]	2018-05-08 16:58:32	LINENO:82	Restoring parameters from best_policy.model
+[INFO]	2018-05-09 09:37:13	LINENO:82	Restoring parameters from best_policy.model
+[INFO]	2018-05-09 09:37:58	LINENO:82	Restoring parameters from best_policy.model
+[INFO]	2018-05-09 09:39:11	LINENO:82	Restoring parameters from best_policy.model
+[INFO]	2018-05-11 20:08:33	LINENO:199	start training
+[INFO]	2018-05-11 20:08:33	LINENO:169	start self play
+[ERROR]	2018-05-11 20:08:56	LINENO:194	
+quit
+[INFO]	2018-05-11 20:08:56	LINENO:201	all finished
