@@ -136,8 +136,8 @@ class PolicyValueNet():
             self.entropy = tf.negative(tf.reduce_mean(tf.reduce_sum(tf.exp(self.action_fc) * self.action_fc, 1)),
                                        name='entropy')
 
-            for ss in tf.get_default_graph().as_graph_def().node:
-                print(ss.name)
+            #for ss in tf.get_default_graph().as_graph_def().node:
+            #    print(ss.name)
             # Initialize variables
             init = tf.global_variables_initializer()
             self.session.run(init)

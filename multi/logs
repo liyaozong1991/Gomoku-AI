@@ -1760,3 +1760,960 @@ Please use tf.global_variables instead.
 [ERROR]	2018-05-11 21:23:07	LINENO:250	
 quit
 [INFO]	2018-05-11 21:23:07	LINENO:256	all finished
+[INFO]	2018-05-11 23:34:59	LINENO:250	start training
+[INFO]	2018-05-11 23:34:59	LINENO:52	init tf net
+[INFO]	2018-05-11 23:35:00	LINENO:29	init model
+[INFO]	2018-05-11 23:35:01	LINENO:56	init tf net finished
+[INFO]	2018-05-11 23:36:09	LINENO:250	start training
+[INFO]	2018-05-11 23:36:09	LINENO:52	init tf net
+[INFO]	2018-05-11 23:36:10	LINENO:29	init model
+[INFO]	2018-05-11 23:36:11	LINENO:56	init tf net finished
+[INFO]	2018-05-11 23:36:13	LINENO:60	start selfplay process 1
+[INFO]	2018-05-11 23:36:13	LINENO:63	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:36:13	LINENO:60	start selfplay process 0
+[INFO]	2018-05-11 23:36:13	LINENO:63	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:36:13	LINENO:24	restore model
+[INFO]	2018-05-11 23:36:13	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:36:13	LINENO:24	restore model
+[INFO]	2018-05-11 23:36:13	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:36:13	LINENO:81	process 1 0th selfplay finished
+[INFO]	2018-05-11 23:36:13	LINENO:63	process 1 start 1th selfplay
+[INFO]	2018-05-11 23:36:13	LINENO:24	restore model
+[INFO]	2018-05-11 23:36:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:36:14	LINENO:81	process 0 0th selfplay finished
+[INFO]	2018-05-11 23:36:14	LINENO:63	process 0 start 1th selfplay
+[INFO]	2018-05-11 23:36:14	LINENO:24	restore model
+[INFO]	2018-05-11 23:36:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:36:15	LINENO:81	process 1 1th selfplay finished
+[INFO]	2018-05-11 23:36:15	LINENO:82	process 1 all selfpaly finished
+[INFO]	2018-05-11 23:36:15	LINENO:81	process 0 1th selfplay finished
+[INFO]	2018-05-11 23:36:15	LINENO:82	process 0 all selfpaly finished
+[INFO]	2018-05-11 23:36:29	LINENO:217	update net process finished
+[INFO]	2018-05-11 23:36:29	LINENO:252	all finished
+[INFO]	2018-05-11 23:39:27	LINENO:251	start training
+[INFO]	2018-05-11 23:39:27	LINENO:52	init tf net
+[INFO]	2018-05-11 23:39:28	LINENO:29	init model
+[INFO]	2018-05-11 23:39:29	LINENO:56	init tf net finished
+[INFO]	2018-05-11 23:39:30	LINENO:60	start selfplay process 0
+[INFO]	2018-05-11 23:39:30	LINENO:63	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:39:30	LINENO:60	start selfplay process 1
+[INFO]	2018-05-11 23:39:30	LINENO:63	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:39:30	LINENO:24	restore model
+[INFO]	2018-05-11 23:39:31	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:39:31	LINENO:24	restore model
+[INFO]	2018-05-11 23:39:31	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:39:31	LINENO:81	process 0 0th selfplay finished
+[INFO]	2018-05-11 23:39:31	LINENO:63	process 0 start 1th selfplay
+[INFO]	2018-05-11 23:39:31	LINENO:24	restore model
+[INFO]	2018-05-11 23:39:32	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:39:32	LINENO:81	process 1 0th selfplay finished
+[INFO]	2018-05-11 23:39:32	LINENO:63	process 1 start 1th selfplay
+[INFO]	2018-05-11 23:39:32	LINENO:24	restore model
+[INFO]	2018-05-11 23:39:32	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:39:32	LINENO:81	process 0 1th selfplay finished
+[INFO]	2018-05-11 23:39:32	LINENO:82	process 0 all selfpaly finished
+[INFO]	2018-05-11 23:39:33	LINENO:81	process 1 1th selfplay finished
+[INFO]	2018-05-11 23:39:33	LINENO:82	process 1 all selfpaly finished
+[INFO]	2018-05-11 23:39:47	LINENO:218	update net process finished
+[INFO]	2018-05-11 23:39:48	LINENO:253	all finished
+[INFO]	2018-05-11 23:40:54	LINENO:251	start training
+[INFO]	2018-05-11 23:40:54	LINENO:52	init tf net
+[INFO]	2018-05-11 23:40:55	LINENO:29	init model
+[INFO]	2018-05-11 23:40:56	LINENO:56	init tf net finished
+[INFO]	2018-05-11 23:40:58	LINENO:60	start selfplay process 0
+[INFO]	2018-05-11 23:40:58	LINENO:63	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:40:58	LINENO:60	start selfplay process 1
+[INFO]	2018-05-11 23:40:58	LINENO:63	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:40:58	LINENO:24	restore model
+[INFO]	2018-05-11 23:40:58	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:40:58	LINENO:24	restore model
+[INFO]	2018-05-11 23:40:58	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:40:59	LINENO:81	process 0 0th selfplay finished
+[INFO]	2018-05-11 23:40:59	LINENO:63	process 0 start 1th selfplay
+[INFO]	2018-05-11 23:40:59	LINENO:24	restore model
+[INFO]	2018-05-11 23:40:59	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:40:59	LINENO:81	process 1 0th selfplay finished
+[INFO]	2018-05-11 23:40:59	LINENO:63	process 1 start 1th selfplay
+[INFO]	2018-05-11 23:40:59	LINENO:24	restore model
+[INFO]	2018-05-11 23:40:59	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:41:00	LINENO:81	process 0 1th selfplay finished
+[INFO]	2018-05-11 23:41:00	LINENO:82	process 0 all selfpaly finished
+[INFO]	2018-05-11 23:41:00	LINENO:81	process 1 1th selfplay finished
+[INFO]	2018-05-11 23:41:00	LINENO:82	process 1 all selfpaly finished
+[INFO]	2018-05-11 23:41:14	LINENO:218	update net process finished
+[INFO]	2018-05-11 23:41:14	LINENO:253	all finished
+[INFO]	2018-05-11 23:44:37	LINENO:254	start training
+[INFO]	2018-05-11 23:44:37	LINENO:52	init tf net
+[INFO]	2018-05-11 23:44:39	LINENO:29	init model
+[INFO]	2018-05-11 23:44:40	LINENO:56	init tf net finished
+[INFO]	2018-05-11 23:44:41	LINENO:60	start selfplay process 0
+[INFO]	2018-05-11 23:44:41	LINENO:63	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:44:41	LINENO:60	start selfplay process 1
+[INFO]	2018-05-11 23:44:41	LINENO:63	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:44:41	LINENO:24	restore model
+[INFO]	2018-05-11 23:44:42	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:44:42	LINENO:24	restore model
+[INFO]	2018-05-11 23:44:42	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:44:42	LINENO:84	process 0 0th selfplay finished
+[INFO]	2018-05-11 23:44:42	LINENO:63	process 0 start 1th selfplay
+[INFO]	2018-05-11 23:44:42	LINENO:24	restore model
+[INFO]	2018-05-11 23:44:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:44:43	LINENO:84	process 1 0th selfplay finished
+[INFO]	2018-05-11 23:44:43	LINENO:63	process 1 start 1th selfplay
+[INFO]	2018-05-11 23:44:43	LINENO:24	restore model
+[INFO]	2018-05-11 23:44:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:44:43	LINENO:84	process 0 1th selfplay finished
+[INFO]	2018-05-11 23:44:43	LINENO:85	process 0 all selfpaly finished
+[INFO]	2018-05-11 23:44:44	LINENO:84	process 1 1th selfplay finished
+[INFO]	2018-05-11 23:44:44	LINENO:85	process 1 all selfpaly finished
+[INFO]	2018-05-11 23:44:57	LINENO:221	update net process finished
+[INFO]	2018-05-11 23:44:58	LINENO:256	all finished
+[INFO]	2018-05-11 23:47:04	LINENO:255	start training
+[INFO]	2018-05-11 23:47:04	LINENO:52	init tf net
+[INFO]	2018-05-11 23:47:05	LINENO:29	init model
+[INFO]	2018-05-11 23:47:06	LINENO:56	init tf net finished
+[INFO]	2018-05-11 23:47:08	LINENO:60	start selfplay process 1
+[INFO]	2018-05-11 23:47:08	LINENO:63	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:47:08	LINENO:60	start selfplay process 0
+[INFO]	2018-05-11 23:47:08	LINENO:63	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:47:08	LINENO:24	restore model
+[INFO]	2018-05-11 23:47:08	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:47:08	LINENO:24	restore model
+[INFO]	2018-05-11 23:47:08	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:47:08	LINENO:85	process 1 0th selfplay finished
+[INFO]	2018-05-11 23:47:08	LINENO:63	process 1 start 1th selfplay
+[INFO]	2018-05-11 23:47:08	LINENO:24	restore model
+[INFO]	2018-05-11 23:47:09	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:47:09	LINENO:85	process 0 0th selfplay finished
+[INFO]	2018-05-11 23:47:09	LINENO:63	process 0 start 1th selfplay
+[INFO]	2018-05-11 23:47:09	LINENO:24	restore model
+[INFO]	2018-05-11 23:47:09	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:47:10	LINENO:85	process 1 1th selfplay finished
+[INFO]	2018-05-11 23:47:10	LINENO:86	process 1 all selfpaly finished
+[INFO]	2018-05-11 23:47:10	LINENO:85	process 0 1th selfplay finished
+[INFO]	2018-05-11 23:47:10	LINENO:86	process 0 all selfpaly finished
+[INFO]	2018-05-11 23:47:24	LINENO:222	update net process finished
+[INFO]	2018-05-11 23:47:24	LINENO:257	all finished
+[INFO]	2018-05-11 23:56:50	LINENO:259	start training
+[INFO]	2018-05-11 23:56:50	LINENO:51	init tf net
+[INFO]	2018-05-11 23:56:51	LINENO:29	init model
+[INFO]	2018-05-11 23:56:52	LINENO:55	init tf net finished
+[INFO]	2018-05-11 23:56:53	LINENO:59	start selfplay process 1
+[INFO]	2018-05-11 23:56:53	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:56:53	LINENO:59	start selfplay process 0
+[INFO]	2018-05-11 23:56:53	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:56:53	LINENO:24	restore model
+[INFO]	2018-05-11 23:56:54	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:56:54	LINENO:24	restore model
+[INFO]	2018-05-11 23:56:54	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:56:57	LINENO:24	restore model
+[INFO]	2018-05-11 23:56:58	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:56:59	LINENO:164	kl:0.00000,lr_multiplier:1.500,loss:5.578370094299316,entropy:4.604671478271484,explained_var_old:0.035,explained_var_new:0.035
+[ERROR]	2018-05-11 23:57:01	LINENO:255	
+quit
+[INFO]	2018-05-11 23:57:01	LINENO:261	all finished
+[INFO]	2018-05-11 23:57:30	LINENO:259	start training
+[INFO]	2018-05-11 23:57:30	LINENO:51	init tf net
+[INFO]	2018-05-11 23:57:31	LINENO:29	init model
+[INFO]	2018-05-11 23:57:32	LINENO:55	init tf net finished
+[INFO]	2018-05-11 23:57:33	LINENO:59	start selfplay process 1
+[INFO]	2018-05-11 23:57:33	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-11 23:57:33	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:33	LINENO:59	start selfplay process 0
+[INFO]	2018-05-11 23:57:33	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-11 23:57:34	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:34	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:34	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:34	LINENO:86	process 1 0th selfplay finished
+[INFO]	2018-05-11 23:57:34	LINENO:62	process 1 start 1th selfplay
+[INFO]	2018-05-11 23:57:34	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:35	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:35	LINENO:86	process 0 0th selfplay finished
+[INFO]	2018-05-11 23:57:35	LINENO:62	process 0 start 1th selfplay
+[INFO]	2018-05-11 23:57:35	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:35	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:35	LINENO:86	process 1 1th selfplay finished
+[INFO]	2018-05-11 23:57:35	LINENO:87	process 1 all selfpaly finished
+[INFO]	2018-05-11 23:57:36	LINENO:86	process 0 1th selfplay finished
+[INFO]	2018-05-11 23:57:36	LINENO:87	process 0 all selfpaly finished
+[INFO]	2018-05-11 23:57:38	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:38	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:40	LINENO:164	kl:0.00000,lr_multiplier:1.500,loss:5.58715295791626,entropy:4.604358673095703,explained_var_old:0.027,explained_var_new:0.027
+[INFO]	2018-05-11 23:57:44	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:44	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:45	LINENO:164	kl:0.00000,lr_multiplier:2.250,loss:5.595093250274658,entropy:4.604397296905518,explained_var_old:0.025,explained_var_new:0.025
+[INFO]	2018-05-11 23:57:49	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:50	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:57:52	LINENO:164	kl:0.00000,lr_multiplier:3.375,loss:5.587191104888916,entropy:4.604360580444336,explained_var_old:0.026,explained_var_new:0.026
+[INFO]	2018-05-11 23:57:56	LINENO:24	restore model
+[INFO]	2018-05-11 23:57:57	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:58:01	LINENO:164	kl:0.00000,lr_multiplier:5.062,loss:5.590301036834717,entropy:4.604370594024658,explained_var_old:0.025,explained_var_new:0.025
+[INFO]	2018-05-11 23:58:05	LINENO:24	restore model
+[INFO]	2018-05-11 23:58:07	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:58:14	LINENO:164	kl:0.00000,lr_multiplier:7.594,loss:5.592936992645264,entropy:4.604414939880371,explained_var_old:0.028,explained_var_new:0.028
+[INFO]	2018-05-11 23:58:18	LINENO:24	restore model
+[INFO]	2018-05-11 23:58:22	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:58:34	LINENO:164	kl:0.00000,lr_multiplier:11.391,loss:5.587191581726074,entropy:4.604360580444336,explained_var_old:0.027,explained_var_new:0.027
+[INFO]	2018-05-11 23:58:39	LINENO:24	restore model
+[INFO]	2018-05-11 23:58:46	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-11 23:59:12	LINENO:164	kl:0.00000,lr_multiplier:11.391,loss:5.588287353515625,entropy:4.604365348815918,explained_var_old:0.026,explained_var_new:0.026
+[INFO]	2018-05-11 23:59:17	LINENO:24	restore model
+[ERROR]	2018-05-11 23:59:32	LINENO:255	
+quit
+[INFO]	2018-05-11 23:59:32	LINENO:261	all finished
+[INFO]	2018-05-12 00:04:16	LINENO:259	start training
+[INFO]	2018-05-12 00:04:16	LINENO:51	init tf net
+[INFO]	2018-05-12 00:04:17	LINENO:29	init model
+[INFO]	2018-05-12 00:04:18	LINENO:55	init tf net finished
+[INFO]	2018-05-12 00:04:20	LINENO:59	start selfplay process 0
+[INFO]	2018-05-12 00:04:20	LINENO:59	start selfplay process 1
+[INFO]	2018-05-12 00:04:20	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:04:20	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:04:20	LINENO:24	restore model
+[INFO]	2018-05-12 00:04:20	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:04:20	LINENO:24	restore model
+[INFO]	2018-05-12 00:04:20	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:04:57	LINENO:259	start training
+[INFO]	2018-05-12 00:04:57	LINENO:51	init tf net
+[INFO]	2018-05-12 00:04:59	LINENO:29	init model
+[INFO]	2018-05-12 00:05:00	LINENO:55	init tf net finished
+[INFO]	2018-05-12 00:05:01	LINENO:59	start selfplay process 0
+[INFO]	2018-05-12 00:05:01	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:05:01	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:01	LINENO:59	start selfplay process 1
+[INFO]	2018-05-12 00:05:01	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:05:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:02	LINENO:86	process 0 0th selfplay finished
+[INFO]	2018-05-12 00:05:02	LINENO:62	process 0 start 1th selfplay
+[INFO]	2018-05-12 00:05:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:02	LINENO:86	process 1 0th selfplay finished
+[INFO]	2018-05-12 00:05:02	LINENO:62	process 1 start 1th selfplay
+[INFO]	2018-05-12 00:05:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:03	LINENO:86	process 0 1th selfplay finished
+[INFO]	2018-05-12 00:05:03	LINENO:87	process 0 all selfpaly finished
+[INFO]	2018-05-12 00:05:03	LINENO:86	process 1 1th selfplay finished
+[INFO]	2018-05-12 00:05:03	LINENO:87	process 1 all selfpaly finished
+[INFO]	2018-05-12 00:05:05	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:06	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:07	LINENO:164	kl:0.00000,lr_multiplier:1.500,loss:5.623052597045898,entropy:4.604841232299805,explained_var_old:-0.004,explained_var_new:-0.004
+[INFO]	2018-05-12 00:05:11	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:11	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:13	LINENO:164	kl:0.00000,lr_multiplier:2.250,loss:5.620795249938965,entropy:4.604848861694336,explained_var_old:-0.003,explained_var_new:-0.003
+[INFO]	2018-05-12 00:05:17	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:17	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:20	LINENO:164	kl:0.00000,lr_multiplier:3.375,loss:5.622729778289795,entropy:4.604846000671387,explained_var_old:-0.003,explained_var_new:-0.003
+[INFO]	2018-05-12 00:05:24	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:24	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:28	LINENO:164	kl:0.00000,lr_multiplier:5.062,loss:5.623676300048828,entropy:4.6048431396484375,explained_var_old:-0.004,explained_var_new:-0.004
+[INFO]	2018-05-12 00:05:32	LINENO:24	restore model
+[INFO]	2018-05-12 00:05:34	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:05:41	LINENO:164	kl:0.00000,lr_multiplier:7.594,loss:5.6230340003967285,entropy:4.604848861694336,explained_var_old:-0.004,explained_var_new:-0.004
+[ERROR]	2018-05-12 00:05:43	LINENO:255	
+quit
+[INFO]	2018-05-12 00:05:43	LINENO:261	all finished
+[INFO]	2018-05-12 00:07:06	LINENO:259	start training
+[INFO]	2018-05-12 00:07:06	LINENO:51	init tf net
+[INFO]	2018-05-12 00:07:07	LINENO:29	init model
+[INFO]	2018-05-12 00:07:08	LINENO:55	init tf net finished
+[INFO]	2018-05-12 00:07:10	LINENO:59	start selfplay process 1
+[INFO]	2018-05-12 00:07:10	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:07:10	LINENO:59	start selfplay process 0
+[INFO]	2018-05-12 00:07:10	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:07:10	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:10	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:10	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:10	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:11	LINENO:86	process 1 0th selfplay finished
+[INFO]	2018-05-12 00:07:11	LINENO:62	process 1 start 1th selfplay
+[INFO]	2018-05-12 00:07:11	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:11	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:11	LINENO:86	process 0 0th selfplay finished
+[INFO]	2018-05-12 00:07:11	LINENO:62	process 0 start 1th selfplay
+[INFO]	2018-05-12 00:07:11	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:12	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:12	LINENO:86	process 1 1th selfplay finished
+[INFO]	2018-05-12 00:07:12	LINENO:87	process 1 all selfpaly finished
+[INFO]	2018-05-12 00:07:12	LINENO:86	process 0 1th selfplay finished
+[INFO]	2018-05-12 00:07:12	LINENO:87	process 0 all selfpaly finished
+[INFO]	2018-05-12 00:07:14	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:15	LINENO:164	kl:0.00000,lr_multiplier:1.500,loss:5.608492374420166,entropy:4.6035661697387695,explained_var_old:0.011,explained_var_new:0.011
+[INFO]	2018-05-12 00:07:19	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:20	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:21	LINENO:164	kl:0.00000,lr_multiplier:2.250,loss:5.611652851104736,entropy:4.60365104675293,explained_var_old:0.009,explained_var_new:0.009
+[INFO]	2018-05-12 00:07:25	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:28	LINENO:164	kl:0.00000,lr_multiplier:3.375,loss:5.608513832092285,entropy:4.60361385345459,explained_var_old:0.011,explained_var_new:0.011
+[INFO]	2018-05-12 00:07:32	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:33	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:37	LINENO:164	kl:0.00000,lr_multiplier:5.062,loss:5.608640193939209,entropy:4.603625297546387,explained_var_old:0.010,explained_var_new:0.010
+[INFO]	2018-05-12 00:07:41	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:07:50	LINENO:164	kl:0.00000,lr_multiplier:7.594,loss:5.609202861785889,entropy:4.603630065917969,explained_var_old:0.009,explained_var_new:0.009
+[INFO]	2018-05-12 00:07:54	LINENO:24	restore model
+[INFO]	2018-05-12 00:07:58	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:08:11	LINENO:164	kl:0.00000,lr_multiplier:11.391,loss:5.607004165649414,entropy:4.603599548339844,explained_var_old:0.010,explained_var_new:0.010
+[INFO]	2018-05-12 00:08:15	LINENO:24	restore model
+[INFO]	2018-05-12 00:08:23	LINENO:116	Restoring parameters from ./current_policy.model
+[ERROR]	2018-05-12 00:08:43	LINENO:255	
+quit
+[INFO]	2018-05-12 00:08:43	LINENO:261	all finished
+[INFO]	2018-05-12 00:12:57	LINENO:268	start training
+[INFO]	2018-05-12 00:12:57	LINENO:51	init tf net
+[INFO]	2018-05-12 00:12:59	LINENO:29	init model
+[INFO]	2018-05-12 00:13:00	LINENO:55	init tf net finished
+[INFO]	2018-05-12 00:13:01	LINENO:59	start selfplay process 1
+[INFO]	2018-05-12 00:13:01	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:13:01	LINENO:59	start selfplay process 0
+[INFO]	2018-05-12 00:13:01	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:13:01	LINENO:24	restore model
+[INFO]	2018-05-12 00:13:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:13:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:13:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:13:03	LINENO:86	process 1 0th selfplay finished
+[INFO]	2018-05-12 00:13:03	LINENO:62	process 1 start 1th selfplay
+[INFO]	2018-05-12 00:13:03	LINENO:24	restore model
+[INFO]	2018-05-12 00:13:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:13:03	LINENO:86	process 0 0th selfplay finished
+[INFO]	2018-05-12 00:13:03	LINENO:62	process 0 start 1th selfplay
+[INFO]	2018-05-12 00:13:03	LINENO:24	restore model
+[INFO]	2018-05-12 00:13:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:13:03	LINENO:86	process 1 1th selfplay finished
+[INFO]	2018-05-12 00:13:03	LINENO:87	process 1 all selfpaly finished
+[INFO]	2018-05-12 00:13:04	LINENO:86	process 0 1th selfplay finished
+[INFO]	2018-05-12 00:13:04	LINENO:87	process 0 all selfpaly finished
+[INFO]	2018-05-12 00:13:05	LINENO:24	restore model
+[INFO]	2018-05-12 00:13:06	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:13:07	LINENO:164	kl:0.00000,lr_multiplier:1.500,loss:5.617102146148682,entropy:4.604694843292236,explained_var_old:-0.000,explained_var_new:-0.000
+[INFO]	2018-05-12 00:13:11	LINENO:24	restore model
+[INFO]	2018-05-12 00:13:11	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:13:13	LINENO:164	kl:0.00000,lr_multiplier:2.250,loss:5.618636131286621,entropy:4.604692459106445,explained_var_old:-0.001,explained_var_new:-0.001
+[INFO]	2018-05-12 00:13:17	LINENO:223	update net process finished
+[INFO]	2018-05-12 00:13:17	LINENO:270	all finished
+[INFO]	2018-05-12 00:35:21	LINENO:267	start training
+[INFO]	2018-05-12 00:35:21	LINENO:51	init tf net
+[INFO]	2018-05-12 00:35:23	LINENO:29	init model
+[INFO]	2018-05-12 00:35:24	LINENO:55	init tf net finished
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 7
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 0
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 4
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 7 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 4 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 6
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 6 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 1
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 3
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 3 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 2
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 2 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 5
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 5 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 9
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 9 start 0th selfplay
+[INFO]	2018-05-12 00:35:25	LINENO:59	start selfplay process 8
+[INFO]	2018-05-12 00:35:25	LINENO:62	process 8 start 0th selfplay
+[INFO]	2018-05-12 00:35:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:27	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:27	LINENO:86	process 7 0th selfplay finished
+[INFO]	2018-05-12 00:35:27	LINENO:62	process 7 start 1th selfplay
+[INFO]	2018-05-12 00:35:27	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:27	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:27	LINENO:86	process 4 0th selfplay finished
+[INFO]	2018-05-12 00:35:27	LINENO:62	process 4 start 1th selfplay
+[INFO]	2018-05-12 00:35:27	LINENO:86	process 0 0th selfplay finished
+[INFO]	2018-05-12 00:35:27	LINENO:62	process 0 start 1th selfplay
+[INFO]	2018-05-12 00:35:28	LINENO:86	process 6 0th selfplay finished
+[INFO]	2018-05-12 00:35:28	LINENO:62	process 6 start 1th selfplay
+[INFO]	2018-05-12 00:35:28	LINENO:164	kl:0.00000,lr_multiplier:1.500,loss:5.6188435554504395,entropy:4.604205131530762,explained_var_old:-0.000,explained_var_new:-0.000
+[INFO]	2018-05-12 00:35:28	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:29	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:29	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:29	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:29	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:29	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:29	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:30	LINENO:86	process 1 0th selfplay finished
+[INFO]	2018-05-12 00:35:30	LINENO:62	process 1 start 1th selfplay
+[INFO]	2018-05-12 00:35:30	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:30	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:30	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:30	LINENO:86	process 3 0th selfplay finished
+[INFO]	2018-05-12 00:35:30	LINENO:62	process 3 start 1th selfplay
+[INFO]	2018-05-12 00:35:30	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:30	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:30	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:30	LINENO:86	process 2 0th selfplay finished
+[INFO]	2018-05-12 00:35:30	LINENO:62	process 2 start 1th selfplay
+[INFO]	2018-05-12 00:35:31	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:31	LINENO:86	process 5 0th selfplay finished
+[INFO]	2018-05-12 00:35:31	LINENO:62	process 5 start 1th selfplay
+[INFO]	2018-05-12 00:35:31	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:31	LINENO:86	process 9 0th selfplay finished
+[INFO]	2018-05-12 00:35:31	LINENO:62	process 9 start 1th selfplay
+[INFO]	2018-05-12 00:35:31	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:31	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:31	LINENO:86	process 8 0th selfplay finished
+[INFO]	2018-05-12 00:35:31	LINENO:62	process 8 start 1th selfplay
+[INFO]	2018-05-12 00:35:31	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:31	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:32	LINENO:86	process 7 1th selfplay finished
+[INFO]	2018-05-12 00:35:32	LINENO:62	process 7 start 2th selfplay
+[INFO]	2018-05-12 00:35:32	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:32	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:32	LINENO:86	process 4 1th selfplay finished
+[INFO]	2018-05-12 00:35:32	LINENO:62	process 4 start 2th selfplay
+[INFO]	2018-05-12 00:35:32	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:32	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:32	LINENO:86	process 0 1th selfplay finished
+[INFO]	2018-05-12 00:35:32	LINENO:62	process 0 start 2th selfplay
+[INFO]	2018-05-12 00:35:32	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:32	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:33	LINENO:86	process 6 1th selfplay finished
+[INFO]	2018-05-12 00:35:33	LINENO:62	process 6 start 2th selfplay
+[INFO]	2018-05-12 00:35:33	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:33	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:33	LINENO:86	process 1 1th selfplay finished
+[INFO]	2018-05-12 00:35:33	LINENO:62	process 1 start 2th selfplay
+[INFO]	2018-05-12 00:35:33	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:33	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:33	LINENO:86	process 3 1th selfplay finished
+[INFO]	2018-05-12 00:35:33	LINENO:62	process 3 start 2th selfplay
+[INFO]	2018-05-12 00:35:33	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:33	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:34	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:34	LINENO:86	process 2 1th selfplay finished
+[INFO]	2018-05-12 00:35:34	LINENO:62	process 2 start 2th selfplay
+[INFO]	2018-05-12 00:35:34	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:34	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:34	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:34	LINENO:86	process 5 1th selfplay finished
+[INFO]	2018-05-12 00:35:34	LINENO:62	process 5 start 2th selfplay
+[INFO]	2018-05-12 00:35:34	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:34	LINENO:86	process 9 1th selfplay finished
+[INFO]	2018-05-12 00:35:34	LINENO:62	process 9 start 2th selfplay
+[INFO]	2018-05-12 00:35:34	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:35	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:35	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:35	LINENO:86	process 7 2th selfplay finished
+[INFO]	2018-05-12 00:35:35	LINENO:62	process 7 start 3th selfplay
+[INFO]	2018-05-12 00:35:35	LINENO:86	process 8 1th selfplay finished
+[INFO]	2018-05-12 00:35:35	LINENO:62	process 8 start 2th selfplay
+[INFO]	2018-05-12 00:35:35	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:35	LINENO:86	process 4 2th selfplay finished
+[INFO]	2018-05-12 00:35:35	LINENO:62	process 4 start 3th selfplay
+[INFO]	2018-05-12 00:35:35	LINENO:86	process 0 2th selfplay finished
+[INFO]	2018-05-12 00:35:35	LINENO:62	process 0 start 3th selfplay
+[INFO]	2018-05-12 00:35:37	LINENO:164	kl:0.00000,lr_multiplier:2.250,loss:5.6148905754089355,entropy:4.604212760925293,explained_var_old:-0.000,explained_var_new:-0.000
+[INFO]	2018-05-12 00:35:37	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:37	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:37	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:38	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:38	LINENO:86	process 6 2th selfplay finished
+[INFO]	2018-05-12 00:35:38	LINENO:62	process 6 start 3th selfplay
+[INFO]	2018-05-12 00:35:38	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:38	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:38	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:39	LINENO:86	process 1 2th selfplay finished
+[INFO]	2018-05-12 00:35:39	LINENO:62	process 1 start 3th selfplay
+[INFO]	2018-05-12 00:35:39	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:39	LINENO:86	process 3 2th selfplay finished
+[INFO]	2018-05-12 00:35:39	LINENO:62	process 3 start 3th selfplay
+[INFO]	2018-05-12 00:35:39	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:40	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:40	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:40	LINENO:86	process 2 2th selfplay finished
+[INFO]	2018-05-12 00:35:40	LINENO:62	process 2 start 3th selfplay
+[INFO]	2018-05-12 00:35:40	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:40	LINENO:86	process 5 2th selfplay finished
+[INFO]	2018-05-12 00:35:40	LINENO:62	process 5 start 3th selfplay
+[INFO]	2018-05-12 00:35:40	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:41	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:41	LINENO:86	process 9 2th selfplay finished
+[INFO]	2018-05-12 00:35:41	LINENO:62	process 9 start 3th selfplay
+[INFO]	2018-05-12 00:35:41	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:41	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:42	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:42	LINENO:86	process 7 3th selfplay finished
+[INFO]	2018-05-12 00:35:42	LINENO:62	process 7 start 4th selfplay
+[INFO]	2018-05-12 00:35:42	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:42	LINENO:86	process 8 2th selfplay finished
+[INFO]	2018-05-12 00:35:42	LINENO:62	process 8 start 3th selfplay
+[INFO]	2018-05-12 00:35:42	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:43	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:43	LINENO:86	process 4 3th selfplay finished
+[INFO]	2018-05-12 00:35:43	LINENO:62	process 4 start 4th selfplay
+[INFO]	2018-05-12 00:35:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:43	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:44	LINENO:86	process 0 3th selfplay finished
+[INFO]	2018-05-12 00:35:44	LINENO:62	process 0 start 4th selfplay
+[INFO]	2018-05-12 00:35:44	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:44	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:44	LINENO:86	process 6 3th selfplay finished
+[INFO]	2018-05-12 00:35:44	LINENO:62	process 6 start 4th selfplay
+[INFO]	2018-05-12 00:35:45	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:45	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:45	LINENO:86	process 1 3th selfplay finished
+[INFO]	2018-05-12 00:35:45	LINENO:62	process 1 start 4th selfplay
+[INFO]	2018-05-12 00:35:45	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:45	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:46	LINENO:86	process 3 3th selfplay finished
+[INFO]	2018-05-12 00:35:46	LINENO:62	process 3 start 4th selfplay
+[INFO]	2018-05-12 00:35:46	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:46	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:46	LINENO:86	process 2 3th selfplay finished
+[INFO]	2018-05-12 00:35:46	LINENO:62	process 2 start 4th selfplay
+[INFO]	2018-05-12 00:35:47	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:47	LINENO:86	process 5 3th selfplay finished
+[INFO]	2018-05-12 00:35:47	LINENO:62	process 5 start 4th selfplay
+[INFO]	2018-05-12 00:35:49	LINENO:164	kl:0.00000,lr_multiplier:3.375,loss:5.619423866271973,entropy:4.604247093200684,explained_var_old:0.000,explained_var_new:0.000
+[INFO]	2018-05-12 00:35:49	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:50	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:50	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:51	LINENO:86	process 9 3th selfplay finished
+[INFO]	2018-05-12 00:35:51	LINENO:62	process 9 start 4th selfplay
+[INFO]	2018-05-12 00:35:51	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:51	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:52	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:52	LINENO:86	process 7 4th selfplay finished
+[INFO]	2018-05-12 00:35:52	LINENO:62	process 7 start 5th selfplay
+[INFO]	2018-05-12 00:35:53	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:54	LINENO:86	process 8 3th selfplay finished
+[INFO]	2018-05-12 00:35:54	LINENO:62	process 8 start 4th selfplay
+[INFO]	2018-05-12 00:35:54	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:54	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:55	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:55	LINENO:86	process 4 4th selfplay finished
+[INFO]	2018-05-12 00:35:55	LINENO:62	process 4 start 5th selfplay
+[INFO]	2018-05-12 00:35:55	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:56	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:56	LINENO:86	process 0 4th selfplay finished
+[INFO]	2018-05-12 00:35:56	LINENO:62	process 0 start 5th selfplay
+[INFO]	2018-05-12 00:35:56	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:57	LINENO:86	process 6 4th selfplay finished
+[INFO]	2018-05-12 00:35:57	LINENO:62	process 6 start 5th selfplay
+[INFO]	2018-05-12 00:35:57	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:58	LINENO:24	restore model
+[INFO]	2018-05-12 00:35:59	LINENO:86	process 1 4th selfplay finished
+[INFO]	2018-05-12 00:35:59	LINENO:62	process 1 start 5th selfplay
+[INFO]	2018-05-12 00:35:59	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:35:59	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:00	LINENO:86	process 3 4th selfplay finished
+[INFO]	2018-05-12 00:36:00	LINENO:62	process 3 start 5th selfplay
+[INFO]	2018-05-12 00:36:00	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:00	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:01	LINENO:86	process 2 4th selfplay finished
+[INFO]	2018-05-12 00:36:01	LINENO:62	process 2 start 5th selfplay
+[INFO]	2018-05-12 00:36:01	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:03	LINENO:86	process 5 4th selfplay finished
+[INFO]	2018-05-12 00:36:03	LINENO:62	process 5 start 5th selfplay
+[INFO]	2018-05-12 00:36:03	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:04	LINENO:86	process 9 4th selfplay finished
+[INFO]	2018-05-12 00:36:04	LINENO:62	process 9 start 5th selfplay
+[INFO]	2018-05-12 00:36:04	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:04	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:05	LINENO:86	process 7 5th selfplay finished
+[INFO]	2018-05-12 00:36:05	LINENO:62	process 7 start 6th selfplay
+[INFO]	2018-05-12 00:36:05	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:09	LINENO:164	kl:0.00000,lr_multiplier:5.062,loss:5.617887496948242,entropy:4.604245662689209,explained_var_old:0.000,explained_var_new:0.000
+[INFO]	2018-05-12 00:36:09	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:12	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:12	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:13	LINENO:86	process 8 4th selfplay finished
+[INFO]	2018-05-12 00:36:13	LINENO:62	process 8 start 5th selfplay
+[INFO]	2018-05-12 00:36:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:14	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:15	LINENO:86	process 4 5th selfplay finished
+[INFO]	2018-05-12 00:36:15	LINENO:62	process 4 start 6th selfplay
+[INFO]	2018-05-12 00:36:17	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:17	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:18	LINENO:86	process 0 5th selfplay finished
+[INFO]	2018-05-12 00:36:18	LINENO:62	process 0 start 6th selfplay
+[INFO]	2018-05-12 00:36:19	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:19	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:20	LINENO:86	process 6 5th selfplay finished
+[INFO]	2018-05-12 00:36:20	LINENO:62	process 6 start 6th selfplay
+[INFO]	2018-05-12 00:36:21	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:22	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:23	LINENO:86	process 1 5th selfplay finished
+[INFO]	2018-05-12 00:36:23	LINENO:62	process 1 start 6th selfplay
+[INFO]	2018-05-12 00:36:24	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:24	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:25	LINENO:86	process 3 5th selfplay finished
+[INFO]	2018-05-12 00:36:25	LINENO:62	process 3 start 6th selfplay
+[INFO]	2018-05-12 00:36:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:27	LINENO:86	process 2 5th selfplay finished
+[INFO]	2018-05-12 00:36:27	LINENO:62	process 2 start 6th selfplay
+[INFO]	2018-05-12 00:36:28	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:29	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:30	LINENO:86	process 5 5th selfplay finished
+[INFO]	2018-05-12 00:36:30	LINENO:62	process 5 start 6th selfplay
+[INFO]	2018-05-12 00:36:31	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:31	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:32	LINENO:86	process 9 5th selfplay finished
+[INFO]	2018-05-12 00:36:32	LINENO:62	process 9 start 6th selfplay
+[INFO]	2018-05-12 00:36:33	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:34	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:35	LINENO:86	process 7 6th selfplay finished
+[INFO]	2018-05-12 00:36:35	LINENO:62	process 7 start 7th selfplay
+[INFO]	2018-05-12 00:36:36	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:36	LINENO:24	restore model
+[INFO]	2018-05-12 00:36:37	LINENO:86	process 8 5th selfplay finished
+[INFO]	2018-05-12 00:36:37	LINENO:62	process 8 start 6th selfplay
+[INFO]	2018-05-12 00:36:38	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:36:46	LINENO:164	kl:0.00000,lr_multiplier:7.594,loss:5.619534015655518,entropy:4.604246616363525,explained_var_old:-0.000,explained_var_new:-0.000
+[INFO]	2018-05-12 00:36:46	LINENO:24	restore model
+[ERROR]	2018-05-12 00:36:49	LINENO:263	
+quit
+[INFO]	2018-05-12 00:36:49	LINENO:269	all finished
+[INFO]	2018-05-12 00:38:39	LINENO:266	start training
+[INFO]	2018-05-12 00:38:39	LINENO:50	init tf net
+[INFO]	2018-05-12 00:38:40	LINENO:29	init model
+[INFO]	2018-05-12 00:38:41	LINENO:54	init tf net finished
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 1
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 0
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 7
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 7 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 9
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 8
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 9 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 4
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 8 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 4 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 5
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 5 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 2
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 2 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 3
+[INFO]	2018-05-12 00:38:43	LINENO:58	start selfplay process 6
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 3 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:61	process 6 start 0th selfplay
+[INFO]	2018-05-12 00:38:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:43	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:43	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:43	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:44	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:44	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:44	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:44	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:44	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:44	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:45	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:45	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:45	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:45	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:45	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:45	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:46	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:38:46	LINENO:24	restore model
+[INFO]	2018-05-12 00:38:46	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:01	LINENO:85	process 7 0th selfplay finished
+[INFO]	2018-05-12 00:40:01	LINENO:61	process 7 start 1th selfplay
+[INFO]	2018-05-12 00:40:01	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:01	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:02	LINENO:85	process 5 0th selfplay finished
+[INFO]	2018-05-12 00:40:02	LINENO:61	process 5 start 1th selfplay
+[INFO]	2018-05-12 00:40:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:02	LINENO:85	process 0 0th selfplay finished
+[INFO]	2018-05-12 00:40:02	LINENO:61	process 0 start 1th selfplay
+[INFO]	2018-05-12 00:40:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:02	LINENO:85	process 9 0th selfplay finished
+[INFO]	2018-05-12 00:40:02	LINENO:61	process 9 start 1th selfplay
+[INFO]	2018-05-12 00:40:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:02	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:03	LINENO:85	process 2 0th selfplay finished
+[INFO]	2018-05-12 00:40:03	LINENO:61	process 2 start 1th selfplay
+[INFO]	2018-05-12 00:40:03	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:03	LINENO:85	process 1 0th selfplay finished
+[INFO]	2018-05-12 00:40:03	LINENO:61	process 1 start 1th selfplay
+[INFO]	2018-05-12 00:40:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:03	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:04	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:04	LINENO:85	process 8 0th selfplay finished
+[INFO]	2018-05-12 00:40:04	LINENO:61	process 8 start 1th selfplay
+[INFO]	2018-05-12 00:40:04	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:04	LINENO:85	process 4 0th selfplay finished
+[INFO]	2018-05-12 00:40:04	LINENO:61	process 4 start 1th selfplay
+[INFO]	2018-05-12 00:40:05	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:05	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:05	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:05	LINENO:85	process 3 0th selfplay finished
+[INFO]	2018-05-12 00:40:05	LINENO:61	process 3 start 1th selfplay
+[INFO]	2018-05-12 00:40:05	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:06	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:06	LINENO:85	process 6 0th selfplay finished
+[INFO]	2018-05-12 00:40:06	LINENO:61	process 6 start 1th selfplay
+[INFO]	2018-05-12 00:40:08	LINENO:163	kl:0.00000,lr_multiplier:1.500,loss:5.622707843780518,entropy:4.603297233581543,explained_var_old:0.005,explained_var_new:0.005
+[INFO]	2018-05-12 00:40:08	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:08	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:08	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:08	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:12	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:12	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:15	LINENO:163	kl:0.00000,lr_multiplier:2.250,loss:5.625359535217285,entropy:4.603314399719238,explained_var_old:0.004,explained_var_new:0.004
+[INFO]	2018-05-12 00:40:19	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:20	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:24	LINENO:163	kl:0.00000,lr_multiplier:3.375,loss:5.624640941619873,entropy:4.603254318237305,explained_var_old:0.005,explained_var_new:0.005
+[INFO]	2018-05-12 00:40:29	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:30	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:36	LINENO:163	kl:0.00000,lr_multiplier:5.062,loss:5.6225457191467285,entropy:4.603334426879883,explained_var_old:0.006,explained_var_new:0.006
+[INFO]	2018-05-12 00:40:40	LINENO:24	restore model
+[INFO]	2018-05-12 00:40:44	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:40:54	LINENO:163	kl:0.00000,lr_multiplier:7.594,loss:5.623629093170166,entropy:4.6032867431640625,explained_var_old:0.005,explained_var_new:0.005
+[INFO]	2018-05-12 00:40:58	LINENO:24	restore model
+[ERROR]	2018-05-12 00:41:03	LINENO:262	
+quit
+[INFO]	2018-05-12 00:41:03	LINENO:268	all finished
+[INFO]	2018-05-12 00:59:20	LINENO:267	start training
+[INFO]	2018-05-12 00:59:20	LINENO:50	init tf net
+[INFO]	2018-05-12 00:59:22	LINENO:29	init model
+[INFO]	2018-05-12 00:59:23	LINENO:54	init tf net finished
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 6
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 4
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 0
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 6 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 4 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 0 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 8
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 8 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 1
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 1 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 7
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 7 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 5
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 5 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 9
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 9 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 2
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 2 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:58	start selfplay process 3
+[INFO]	2018-05-12 00:59:24	LINENO:61	process 3 start 0th selfplay
+[INFO]	2018-05-12 00:59:24	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:24	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:25	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:25	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:25	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:25	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:25	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:25	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:26	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:26	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:27	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:27	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:27	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 00:59:27	LINENO:24	restore model
+[INFO]	2018-05-12 00:59:28	LINENO:116	Restoring parameters from ./current_policy.model
+[ERROR]	2018-05-12 00:59:36	LINENO:263	
+quit
+[INFO]	2018-05-12 00:59:36	LINENO:269	all finished
+[INFO]	2018-05-12 01:05:59	LINENO:266	start training
+[INFO]	2018-05-12 01:05:59	LINENO:50	init tf net
+[INFO]	2018-05-12 01:06:01	LINENO:29	init model
+[INFO]	2018-05-12 01:06:02	LINENO:54	init tf net finished
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 9
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 9 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 5
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 5 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 6
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 6 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 7
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 7 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 1
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 1 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 8
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 8 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 4
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 4 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:58	start selfplay process 2
+[INFO]	2018-05-12 01:06:03	LINENO:61	process 2 start 0th selfplay
+[INFO]	2018-05-12 01:06:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:04	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:04	LINENO:58	start selfplay process 0
+[INFO]	2018-05-12 01:06:04	LINENO:61	process 0 start 0th selfplay
+[INFO]	2018-05-12 01:06:04	LINENO:58	start selfplay process 3
+[INFO]	2018-05-12 01:06:04	LINENO:61	process 3 start 0th selfplay
+[INFO]	2018-05-12 01:06:04	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:04	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:04	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:04	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:04	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:04	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:05	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:05	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:05	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:05	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:05	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:06	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:06	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:06	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:06	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:06:06	LINENO:24	restore model
+[INFO]	2018-05-12 01:06:07	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:11	LINENO:85	process 9 0th selfplay finished
+[INFO]	2018-05-12 01:07:11	LINENO:61	process 9 start 1th selfplay
+[INFO]	2018-05-12 01:07:11	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:12	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:13	LINENO:85	process 6 0th selfplay finished
+[INFO]	2018-05-12 01:07:13	LINENO:61	process 6 start 1th selfplay
+[INFO]	2018-05-12 01:07:13	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:13	LINENO:85	process 5 0th selfplay finished
+[INFO]	2018-05-12 01:07:13	LINENO:61	process 5 start 1th selfplay
+[INFO]	2018-05-12 01:07:13	LINENO:85	process 7 0th selfplay finished
+[INFO]	2018-05-12 01:07:13	LINENO:61	process 7 start 1th selfplay
+[INFO]	2018-05-12 01:07:13	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:13	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:14	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:14	LINENO:85	process 1 0th selfplay finished
+[INFO]	2018-05-12 01:07:14	LINENO:61	process 1 start 1th selfplay
+[INFO]	2018-05-12 01:07:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:14	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:14	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:15	LINENO:85	process 8 0th selfplay finished
+[INFO]	2018-05-12 01:07:15	LINENO:61	process 8 start 1th selfplay
+[INFO]	2018-05-12 01:07:15	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:15	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:16	LINENO:85	process 4 0th selfplay finished
+[INFO]	2018-05-12 01:07:16	LINENO:61	process 4 start 1th selfplay
+[INFO]	2018-05-12 01:07:16	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:16	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:16	LINENO:85	process 0 0th selfplay finished
+[INFO]	2018-05-12 01:07:16	LINENO:61	process 0 start 1th selfplay
+[INFO]	2018-05-12 01:07:16	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:16	LINENO:85	process 2 0th selfplay finished
+[INFO]	2018-05-12 01:07:16	LINENO:61	process 2 start 1th selfplay
+[INFO]	2018-05-12 01:07:16	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:16	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:17	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:17	LINENO:24	restore model
+[INFO]	2018-05-12 01:07:17	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:07:17	LINENO:268	all finished
+[INFO]	2018-05-12 01:10:46	LINENO:266	start training
+[INFO]	2018-05-12 01:10:46	LINENO:50	init tf net
+[INFO]	2018-05-12 01:10:47	LINENO:29	init model
+[INFO]	2018-05-12 01:10:48	LINENO:54	init tf net finished
+[INFO]	2018-05-12 01:10:50	LINENO:58	start selfplay process 1
+[INFO]	2018-05-12 01:10:50	LINENO:61	process 1 start 0th selfplay
+[INFO]	2018-05-12 01:10:50	LINENO:58	start selfplay process 0
+[INFO]	2018-05-12 01:10:50	LINENO:61	process 0 start 0th selfplay
+[INFO]	2018-05-12 01:10:50	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:50	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:50	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:50	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:51	LINENO:85	process 1 0th selfplay finished
+[INFO]	2018-05-12 01:10:51	LINENO:61	process 1 start 1th selfplay
+[INFO]	2018-05-12 01:10:51	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:51	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:51	LINENO:85	process 0 0th selfplay finished
+[INFO]	2018-05-12 01:10:51	LINENO:61	process 0 start 1th selfplay
+[INFO]	2018-05-12 01:10:51	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:52	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:52	LINENO:85	process 1 1th selfplay finished
+[INFO]	2018-05-12 01:10:52	LINENO:61	process 1 start 2th selfplay
+[INFO]	2018-05-12 01:10:52	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:52	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:52	LINENO:85	process 0 1th selfplay finished
+[INFO]	2018-05-12 01:10:52	LINENO:61	process 0 start 2th selfplay
+[INFO]	2018-05-12 01:10:52	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:53	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:53	LINENO:85	process 1 2th selfplay finished
+[INFO]	2018-05-12 01:10:53	LINENO:61	process 1 start 3th selfplay
+[INFO]	2018-05-12 01:10:53	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:53	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:53	LINENO:85	process 0 2th selfplay finished
+[INFO]	2018-05-12 01:10:53	LINENO:61	process 0 start 3th selfplay
+[INFO]	2018-05-12 01:10:53	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:53	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:54	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:54	LINENO:85	process 1 3th selfplay finished
+[INFO]	2018-05-12 01:10:54	LINENO:61	process 1 start 4th selfplay
+[INFO]	2018-05-12 01:10:54	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:54	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:54	LINENO:85	process 0 3th selfplay finished
+[INFO]	2018-05-12 01:10:54	LINENO:61	process 0 start 4th selfplay
+[INFO]	2018-05-12 01:10:54	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:55	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:55	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:55	LINENO:85	process 1 4th selfplay finished
+[INFO]	2018-05-12 01:10:55	LINENO:61	process 1 start 5th selfplay
+[INFO]	2018-05-12 01:10:55	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:56	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:56	LINENO:85	process 0 4th selfplay finished
+[INFO]	2018-05-12 01:10:56	LINENO:61	process 0 start 5th selfplay
+[INFO]	2018-05-12 01:10:56	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:56	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:56	LINENO:85	process 1 5th selfplay finished
+[INFO]	2018-05-12 01:10:56	LINENO:61	process 1 start 6th selfplay
+[INFO]	2018-05-12 01:10:56	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:57	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:57	LINENO:85	process 0 5th selfplay finished
+[INFO]	2018-05-12 01:10:57	LINENO:61	process 0 start 6th selfplay
+[INFO]	2018-05-12 01:10:57	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:57	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:57	LINENO:85	process 1 6th selfplay finished
+[INFO]	2018-05-12 01:10:57	LINENO:61	process 1 start 7th selfplay
+[INFO]	2018-05-12 01:10:57	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:57	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:58	LINENO:85	process 0 6th selfplay finished
+[INFO]	2018-05-12 01:10:58	LINENO:61	process 0 start 7th selfplay
+[INFO]	2018-05-12 01:10:58	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:58	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:59	LINENO:85	process 1 7th selfplay finished
+[INFO]	2018-05-12 01:10:59	LINENO:61	process 1 start 8th selfplay
+[INFO]	2018-05-12 01:10:59	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:59	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:10:59	LINENO:85	process 0 7th selfplay finished
+[INFO]	2018-05-12 01:10:59	LINENO:61	process 0 start 8th selfplay
+[INFO]	2018-05-12 01:10:59	LINENO:24	restore model
+[INFO]	2018-05-12 01:10:59	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:11:00	LINENO:85	process 1 8th selfplay finished
+[INFO]	2018-05-12 01:11:00	LINENO:61	process 1 start 9th selfplay
+[INFO]	2018-05-12 01:11:00	LINENO:24	restore model
+[INFO]	2018-05-12 01:11:00	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:11:00	LINENO:85	process 0 8th selfplay finished
+[INFO]	2018-05-12 01:11:00	LINENO:61	process 0 start 9th selfplay
+[INFO]	2018-05-12 01:11:00	LINENO:24	restore model
+[INFO]	2018-05-12 01:11:00	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:11:01	LINENO:85	process 1 9th selfplay finished
+[INFO]	2018-05-12 01:11:01	LINENO:61	process 1 start 10th selfplay
+[INFO]	2018-05-12 01:11:01	LINENO:24	restore model
+[INFO]	2018-05-12 01:11:01	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:11:02	LINENO:85	process 0 9th selfplay finished
+[INFO]	2018-05-12 01:11:02	LINENO:61	process 0 start 10th selfplay
+[INFO]	2018-05-12 01:11:02	LINENO:24	restore model
+[INFO]	2018-05-12 01:11:02	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:11:03	LINENO:85	process 1 10th selfplay finished
+[INFO]	2018-05-12 01:11:03	LINENO:61	process 1 start 11th selfplay
+[INFO]	2018-05-12 01:11:03	LINENO:24	restore model
+[INFO]	2018-05-12 01:11:03	LINENO:85	process 0 10th selfplay finished
+[INFO]	2018-05-12 01:11:03	LINENO:61	process 0 start 11th selfplay
+[INFO]	2018-05-12 01:11:03	LINENO:116	Restoring parameters from ./current_policy.model
+[INFO]	2018-05-12 01:11:03	LINENO:268	all finished
+[INFO]	2018-05-12 01:11:04	LINENO:24	restore model
+[INFO]	2018-05-12 01:11:04	LINENO:116	Restoring parameters from ./current_policy.model

@@ -22,6 +22,7 @@ from itertools import repeat
 logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class TrainPipeline():
+
     def __init__(self, init_model=None):
         # params of the board and the game
         self.board_width = 10
@@ -31,7 +32,6 @@ class TrainPipeline():
         self.learn_rate = 2e-3
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
         self.temp = 1.0  # the temperature param
-        #self.n_playout = 400  # num of simulations for each move
         self.n_playout = 4  # num of simulations for each move
         self.c_puct = 5
         self.batch_size = 512  # mini-batch size for training
@@ -39,7 +39,7 @@ class TrainPipeline():
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
         self.check_freq = 50
-        self.game_batch_num = 2
+        self.game_batch_num = 100
         self.process_num = 2
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
@@ -54,7 +54,7 @@ class TrainPipeline():
         policy_value_net.save_model('./current_policy.model')
         logging.info('init tf net finished')
 
-    def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue, shared_queue_length):
+    def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue):
         from policy_value_net_tensorflow import PolicyValueNet
         logging.info('start selfplay process {}'.format(thread_id))
         for index in range(self.game_batch_num):
@@ -75,9 +75,14 @@ class TrainPipeline():
             play_data = list(play_data)
             play_data = self.get_equi_data(play_data)
             # 添加对弈数据，加锁
-            with self.data_lock:
-                shared_queue.extend(play_data)
-                shared_queue_length.value = min(self.batch_size * 10, shared_queue_length.value + len(play_data))
+            #with self.data_lock:
+            #print('-----------')
+            #print(thread_id)
+            #print(len(play_data))
+            shared_queue.extend(play_data)
+            #shared_queue_length.value = min(self.batch_size * 10, shared_queue_length.value + len(play_data))
+            #shared_queue_length.value += len(play_data)
+            #print(shared_queue_length.value)
             logging.info("process {} {}th selfplay finished".format(thread_id, index))
         logging.info('process {} all selfpaly finished'.format(thread_id))
 
@@ -103,17 +108,17 @@ class TrainPipeline():
                                     winner))
         return extend_data
 
-    def policy_update(self, shared_queue, shared_queue_length, net_lock, data_lock, pure_mcts_playout_num):
+    def policy_update(self, shared_queue, net_lock, data_lock, pure_mcts_playout_num):
         from policy_value_net_tensorflow import PolicyValueNet
         # 读取和写入模型文件，加锁
         current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
         """update the policy-value net"""
-        random_index = list(range(shared_queue_length.value))
-        random.shuffle(random_index)
-        mini_batch = []
-        for i in range(self.batch_size):
-            mini_batch.append(shared_queue[random_index[i]])
-        # mini_batch = random.sample(shared_queue, self.batch_size)
+        #random_index = list(range(shared_queue_length.value))
+        #random.shuffle(random_index)
+        #mini_batch = []
+        #for i in range(self.batch_size):
+        #    mini_batch.append(shared_queue[random_index[i]])
+        mini_batch = random.sample(shared_queue, self.batch_size)
         state_batch = [data[0] for data in mini_batch]
         mcts_probs_batch = [data[1] for data in mini_batch]
         winner_batch = [data[2] for data in mini_batch]
@@ -188,32 +193,31 @@ class TrainPipeline():
                 win_cnt[1], win_cnt[2], win_cnt[-1]))
         return win_ratio
 
-    def update_net(self, shared_queue, shared_queue_length, net_lock, data_lock, stop_update_process):
+    def update_net(self, shared_queue, net_lock, data_lock, stop_update_process):
         from policy_value_net_tensorflow import PolicyValueNet
         i = 0
         best_win_ratio = 0
         pure_mcts_playout_num = 1000
         while stop_update_process.value == 0:
             with net_lock:
-                with data_lock:
-                    if shared_queue_length.value > self.batch_size:
-                        loss, entropy = self.policy_update(shared_queue, shared_queue_length, net_lock, data_lock, pure_mcts_playout_num)
-                        # check the performance of the current model,
-                        # and save the model params
-                        print(i)
-                        i += 1
-                        if (i+1) % self.check_freq == 0:
-                            logging.info("current self-play batch: {}".format(i+1))
-                            win_ratio = self.policy_evaluate()
-                            if win_ratio > best_win_ratio:
-                                logging.info("New best policy!!!!!!!!")
-                                best_win_ratio = win_ratio
-                                # update the best_policy
-                                PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model').save_model('./best_policy.model')
-                                if (best_win_ratio == 1.0 and
-                                        pure_mcts_playout_num < 5000):
-                                    pure_mcts_playout_num += 1000
-                                    best_win_ratio = 0.0
+                #with data_lock:
+                if len(shared_queue) > self.batch_size:
+                    loss, entropy = self.policy_update(shared_queue, net_lock, data_lock, pure_mcts_playout_num)
+                    # check the performance of the current model,
+                    # and save the model params
+                    i += 1
+                    if (i+1) % self.check_freq == 0:
+                        logging.info("current self-play batch: {}".format(i+1))
+                        win_ratio = self.policy_evaluate()
+                        if win_ratio > best_win_ratio:
+                            logging.info("New best policy!!!!!!!!")
+                            best_win_ratio = win_ratio
+                            # update the best_policy
+                            PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model').save_model('./best_policy.model')
+                            if (best_win_ratio == 1.0 and
+                                    pure_mcts_playout_num < 5000):
+                                pure_mcts_playout_num += 1000
+                                best_win_ratio = 0.0
             time.sleep(4)
         logging.info('update net process finished')
 
@@ -227,25 +231,34 @@ class TrainPipeline():
             init_process.join()
             #shared_queue = m.deque(maxlen=self.batch_size * 10)
             shared_queue = Manager().list()
-            shared_queue_length= multiprocessing.Value('i', 0)
+            #shared_queue_length= multiprocessing.Value('i', 0)
             stop_update_process = multiprocessing.Value('i', 0)
+            pro_list = []
             for i in range(self.process_num):
-                pro = multiprocessing.Process(target=self.collect_selfplay_data_for_multi_threads, args=(i, shared_queue, shared_queue_length))
+                pro = multiprocessing.Process(target=self.collect_selfplay_data_for_multi_threads, args=(i, shared_queue))
+                pro_list.append(pro)
                 pro.start()
-            update_process = multiprocessing.Process(target=self.update_net, args=(shared_queue, shared_queue_length, self.net_lock, self.data_lock, stop_update_process))
+            update_process = multiprocessing.Process(target=self.update_net, args=(shared_queue,self.net_lock, self.data_lock, stop_update_process))
             update_process.start()
             # 保证模型基本启动完成
             time.sleep(self.main_process_wait_time)
-            while True:
-                children_list = multiprocessing.active_children()
-                print(len(children_list))
-                if len(children_list) >= 2: # 正常运行
-                    time.sleep(1)
-                elif len(children_list) == 1: # 对弈进程全部结束，准备更新网络的进程
+            all_finished = True
+            while update_process.is_alive():
+                for pro in pro_list:
+                    if pro.is_alive():
+                        all_finished = False
+                        break
+                if all_finished:
                     stop_update_process.value = 1
-                    time.sleep(1)
-                else: # 全部进程结束，准确退出
-                    break
+                #children_list = multiprocessing.active_children()
+                #print("children num:{}".format(len(children_list)))
+                #if len(children_list) >= 2: # 正常运行
+                #    time.sleep(1)
+                #elif len(children_list) == 1: # 对弈进程全部结束，准备更新网络的进程
+                #    stop_update_process.value = 1
+                #    time.sleep(1)
+                #else: # 全部进程结束，准确退出
+                #    break
         except KeyboardInterrupt:
             logging.error('\n\rquit')
 
