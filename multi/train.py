@@ -1,3 +1,4 @@
+#!/search/huidu/tools/python3.6/bin/python3
 # -*- coding: utf-8 -*-
 """
 An implementation of the training pipeline of AlphaZero for Gomoku
@@ -17,6 +18,8 @@ import time
 from multiprocessing import Manager, Pool
 import importlib
 from itertools import repeat
+import os
+#os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # log 配置
 logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
@@ -39,32 +42,34 @@ class TrainPipeline():
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.check_freq = 50
-        self.game_batch_num = 10000000
-        self.process_num = 20
+        self.check_freq = 200
+        self.game_batch_num = 100000000
+        self.local_game_batch_num = 20
+        self.process_num = 5
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.main_process_wait_time = 300
 
     def init_tensorflow_net(self):
-        import os
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
         logging.info('init tf net')
         from policy_value_net_tensorflow import PolicyValueNet
         policy_value_net = PolicyValueNet(self.board_width, self.board_height)
         policy_value_net.save_model('./current_policy.model')
+        policy_value_net.destroy_model()
         logging.info('init tf net finished')
 
     def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue, net_lock, data_lock):
-        import os
-        os.environ["CUDA_VISIBLE_DEVICES"] = "{}".format(thread_id % 4 + 2)
-        from policy_value_net_tensorflow import PolicyValueNet
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(thread_id+2)
         logging.info('start selfplay process {}'.format(thread_id))
-        for index in range(self.game_batch_num):
-        # 读取模型文件，加锁
+        def local_thread_func(thread_id, shared_queue, net_lock, data_lock):
+            from policy_value_net_tensorflow import PolicyValueNet
+            # 读取模型文件，加锁
             logging.info("process {} start {}th selfplay".format(thread_id, index))
             with net_lock:
+                logging.info('process {} get net lock'.format(thread_id))
                 current_policy = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
+            logging.info('process {} release net lock'.format(thread_id))
             local_board = Board(width=10,
                                height=10,
                                n_in_row=5)
@@ -73,16 +78,26 @@ class TrainPipeline():
                                                c_puct=self.c_puct,
                                                n_playout=self.n_playout,
                                                is_selfplay=1)
+            #for local_id in range(self.local_game_batch_num):
             winner, play_data = local_game.start_self_play(local_mcts_player,
                                                            temp=self.temp)
             play_data = list(play_data)
             play_data = self.get_equi_data(play_data)
             # 添加对弈数据，加锁
             with data_lock:
+                logging.info('process {}: get date lock'.format(thread_id))
+                #logging.info('process {}:{} get date lock'.format(thread_id, local_id))
                 shared_queue.extend(play_data)
                 if len(shared_queue) > self.buffer_num:
                     shared_queue = shared_queue[-self.buffer_num:]
+            #logging.info('process {}:{} release data lock'.format(thread_id, local_id))
+            logging.info('process {}: release data lock'.format(thread_id))
             logging.info("process {} {}th selfplay finished".format(thread_id, index))
+            current_policy.destroy_model()
+        for index in range(self.game_batch_num):
+            pro = multiprocessing.Process(target=local_thread_func, args=(thread_id, shared_queue, net_lock, data_lock))
+            pro.start()
+            pro.join()
         logging.info('process {} all selfpaly finished'.format(thread_id))
 
     def get_equi_data(self, play_data):
@@ -107,18 +122,14 @@ class TrainPipeline():
                                     winner))
         return extend_data
 
-    def policy_update(self, shared_queue, pure_mcts_playout_num):
-        import os
-        os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-        from policy_value_net_tensorflow import PolicyValueNet
-        # 读取和写入模型文
-        current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
+    def policy_update(self, current_policy_value_net, shared_queue, net_lock, data_lock):
         """update the policy-value net"""
-        random_index = list(range(len(shared_queue)))
-        random.shuffle(random_index)
-        mini_batch = []
-        for i in range(self.batch_size):
-            mini_batch.append(shared_queue[random_index[i]])
+        with data_lock:
+            random_index = list(range(len(shared_queue)))
+            random.shuffle(random_index)
+            mini_batch = []
+            for i in range(self.batch_size):
+                mini_batch.append(shared_queue[random_index[i]])
         state_batch = [data[0] for data in mini_batch]
         mcts_probs_batch = [data[1] for data in mini_batch]
         winner_batch = [data[2] for data in mini_batch]
@@ -136,8 +147,13 @@ class TrainPipeline():
             )
             if kl > self.kl_targ * 4:  # early stopping if D_KL diverges badly
                 break
-            # 这里更新了模型文件
-            current_policy_value_net.save_model('./current_policy.model')
+        # 这里更新了模型文件
+        logging.info('update process save model')
+        with net_lock:
+            logging.info('update process get net lock')
+            current_policy_value_net.save_model('./current_policy.model', write_meta_graph=False)
+        logging.info('update process release net lock')
+        logging.info('update process save model finished')
         # adaptively adjust the learning rate
         if kl > self.kl_targ * 2 and self.lr_multiplier > 0.1:
             self.lr_multiplier /= 1.5
@@ -164,15 +180,11 @@ class TrainPipeline():
                         explained_var_new))
         return loss, entropy
 
-    def policy_evaluate(self, pure_mcts_playout_num, n_games=10):
-        import os
-        os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-        from policy_value_net_tensorflow import PolicyValueNet
+    def policy_evaluate(self, best_win_ratio, pure_mcts_playout_num, current_policy_value_net, n_games=10):
         """
         Evaluate the trained policy by playing against the pure MCTS player
         Note: this is only for monitoring the progress of training
         """
-        current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
         current_mcts_player = MCTSPlayer(current_policy_value_net.policy_value_fn,
                                          c_puct=self.c_puct,
                                          n_playout=self.n_playout)
@@ -183,47 +195,60 @@ class TrainPipeline():
                       height=self.board_height,
                       n_in_row=self.n_in_row)
         game = Game(board)
+        logging.info('update process with pure mcts game start')
         for i in range(n_games):
+            logging.info('update process with pure mcts game {} start'.format(i))
             winner = game.start_play(current_mcts_player,
                                           pure_mcts_player,
                                           start_player=i % 2,
                                           is_shown=0)
             win_cnt[winner] += 1
+            logging.info('update process with pure mcts game {} finished'.format(i))
+        logging.info('update process with pure mcts game all finished'.format(i))
         win_ratio = 1.0*(win_cnt[1] + 0.5*win_cnt[-1]) / n_games
         logging.info("num_playouts:{}, win: {}, lose: {}, tie:{}".format(
                 pure_mcts_playout_num,
                 win_cnt[1], win_cnt[2], win_cnt[-1]))
-        return win_ratio
+        if win_ratio >= best_win_ratio:
+            logging.info("New best policy!!!!!!!!")
+            best_win_ratio = win_ratio
+            # update the best_policy
+            current_policy_value_net.save_model('./best_policy.model')
+            if (best_win_ratio == 1.0 and
+                    pure_mcts_playout_num < 5000):
+                pure_mcts_playout_num += 1000
+                best_win_ratio = 0.0
+        return best_win_ratio, pure_mcts_playout_num
 
     def update_net(self, shared_queue, net_lock, data_lock, stop_update_process):
-        import os
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
         from policy_value_net_tensorflow import PolicyValueNet
+        # 读取和写入模型文
+        with net_lock:
+            current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
+        logging.info('update process release net lock')
         i = 0
         best_win_ratio = 0
         pure_mcts_playout_num = 1000
         while stop_update_process.value == 0:
-            with net_lock:
-                with data_lock:
-                    if len(shared_queue) > self.batch_size:
-                        loss, entropy = self.policy_update(shared_queue, pure_mcts_playout_num)
-                        # check the performance of the current model,
-                        # and save the model params
-                        i += 1
-                        if (i+1) % self.check_freq == 0:
-                            logging.info("current self-play batch: {}".format(i+1))
-                            win_ratio = self.policy_evaluate()
-                            if win_ratio > best_win_ratio:
-                                logging.info("New best policy!!!!!!!!")
-                                best_win_ratio = win_ratio
-                                # update the best_policy
-                                PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model').save_model('./best_policy.model')
-                                if (best_win_ratio == 1.0 and
-                                        pure_mcts_playout_num < 5000):
-                                    pure_mcts_playout_num += 1000
-                                    best_win_ratio = 0.0
-            time.sleep(4)
-        logging.info('update net process finished')
+            #with net_lock:
+            #logging.info('update process get net lock')
+            with data_lock:
+                logging.info('update process get data lock')
+                shared_queue_length = len(shared_queue)
+            logging.info('update process release data lock')
+            if shared_queue_length > self.batch_size:
+                logging.info('update process start {} th self train'.format(i))
+                loss, entropy = self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock)
+                logging.info('update process end {} th self train'.format(i))
+                # check the performance of the current model,
+                # and save the model params
+                if (i+1) % self.check_freq == 0:
+                    logging.info("update process current self-play batch: {}".format(i+1))
+                    best_win_ratio, pure_mcts_playout_num = self.policy_evaluate(best_win_ratio, pure_mcts_playout_num, current_policy_value_net)
+                i += 1
+            time.sleep(1)
+        logging.info('update process finished')
 
     def run(self):
         """run the training pipeline"""
@@ -255,6 +280,7 @@ class TrainPipeline():
                         break
                 if all_finished:
                     stop_update_process.value = 1
+                time.sleep(60)
         except Exception as e:
             logging.error('\n\rquit')
 

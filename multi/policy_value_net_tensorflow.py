@@ -16,15 +16,17 @@ class PolicyValueNet():
         self.board_height = board_height
         # Make a session
         config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
-        config.gpu_options.per_process_gpu_memory_fraction = 0.1
+        config.gpu_options.per_process_gpu_memory_fraction = 0.3
+        config.gpu_options.allow_growth = False
         self.session = tf.Session(config=config)
 
         if model_file is not None:
-            logging.info('restore model')
+            logging.info('import meta graph')
             # For saving and restoring
-            self.saver = tf.train.import_meta_graph(model_file + '.meta')
+            self.saver = tf.train.import_meta_graph(model_file + '-10.meta')
+            logging.info('restore graph')
             self.saver.restore(self.session, tf.train.latest_checkpoint('./'))
+            logging.info('model have loaded')
         else:
             logging.info('init model')
             # Define the tensorflow neural network
@@ -143,7 +145,7 @@ class PolicyValueNet():
             self.session.run(init)
 
             # For saving and restoring
-            self.saver = tf.train.Saver()
+            self.saver = tf.train.Saver(max_to_keep=2)
 
 
     def policy_value(self, state_batch):
@@ -187,5 +189,9 @@ class PolicyValueNet():
                            "learning_rate:0": lr})
         return loss, entropy
 
-    def save_model(self, model_path):
-        self.saver.save(self.session, model_path)
+    def save_model(self, model_path, write_meta_graph=True):
+        #self.saver.save(self.session, model_path)
+        self.saver.save(self.session, model_path, write_meta_graph=write_meta_graph, global_step=10)
+
+    def destroy_model(self):
+        self.session.close()
