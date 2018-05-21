@@ -14,23 +14,24 @@ from mcts_alphaZero import MCTSPlayer
 import logging
 import multiprocessing
 import time
-#from multiprocessing.managers import SyncManager
 from multiprocessing import Manager, Pool
-import importlib
-from itertools import repeat
 import os
 #os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # log 配置
+
 logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class TrainPipeline():
 
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 10
-        self.board_height = 10
-        self.n_in_row = 5
+        # self.board_width = 10
+        # self.board_height = 10
+        # self.n_in_row = 5
+        self.board_width = 6
+        self.board_height = 6
+        self.n_in_row = 4
         # training params
         self.learn_rate = 2e-3
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
@@ -50,11 +51,11 @@ class TrainPipeline():
         # the opponent to evaluate the trained policy
         self.main_process_wait_time = 300
 
-    def init_tensorflow_net(self):
+    def init_tensorflow_net(self, model_file=None):
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
         logging.info('init tf net')
         from policy_value_net_tensorflow import PolicyValueNet
-        policy_value_net = PolicyValueNet(self.board_width, self.board_height)
+        policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file=model_file)
         policy_value_net.save_model('./current_policy.model')
         policy_value_net.destroy_model()
         logging.info('init tf net finished')
@@ -70,9 +71,9 @@ class TrainPipeline():
                 logging.info('process {} get net lock'.format(thread_id))
                 current_policy = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
             logging.info('process {} release net lock'.format(thread_id))
-            local_board = Board(width=10,
-                               height=10,
-                               n_in_row=5)
+            local_board = Board(width=self.board_width,
+                               height=self.board_height,
+                               n_in_row=self.n_in_row)
             local_game = Game(local_board)
             local_mcts_player = MCTSPlayer(current_policy.policy_value_fn,
                                                c_puct=self.c_puct,
@@ -255,7 +256,7 @@ class TrainPipeline():
         try:
             # 必须在一个线程中引入tensorflow，否则会造成其他线程由于错误阻塞。
             # ERROR: could not retrieve CUDA device count: CUDA_ERROR_NOT_INITIALIZED
-            init_process = multiprocessing.Process(target=self.init_tensorflow_net)
+            init_process = multiprocessing.Process(target=self.init_tensorflow_net, args=('./current_policy.model',))
             init_process.start()
             init_process.join()
             m = Manager()

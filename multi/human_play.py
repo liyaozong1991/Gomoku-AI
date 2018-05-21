@@ -12,6 +12,8 @@ from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
 from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 
 class Human(object):
@@ -42,8 +44,8 @@ class Human(object):
         return "Human {}".format(self.player)
 
 def run():
-    n = 5
-    width, height = 10, 10
+    n = 4
+    width, height = 6, 6
     model_file = 'best_policy.model'
     try:
         board = Board(width=width, height=height, n_in_row=n)
