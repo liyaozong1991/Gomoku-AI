@@ -43,7 +43,7 @@ class TrainPipeline():
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.check_freq = 200
+        self.check_freq = 4000
         self.game_batch_num = 100000000
         self.local_game_batch_num = 20
         self.process_num = 5
@@ -227,17 +227,11 @@ class TrainPipeline():
         pure_mcts_playout_num = 1000
         while stop_update_process.value == 0:
             #with net_lock:
-            #logging.info('update process get net lock')
             with data_lock:
                 logging.info('update process get data lock')
                 shared_queue_length = len(shared_queue)
-                print('bbb before: ' + str(len(shared_queue)))
                 while len(shared_queue) > self.buffer_num:
                     shared_queue.pop(0)
-                #if shared_queue_length > self.buffer_num:
-                #    shared_queue = shared_queue[-self.buffer_num:]
-                #    shared_queue_length = len(shared_queue)
-                print('bbb after: ' + str(len(shared_queue)))
             logging.info('update process release data lock')
             if shared_queue_length > self.batch_size:
                 logging.info('update process start {} th self train'.format(i))
