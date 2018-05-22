@@ -13,6 +13,8 @@ from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
 from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 import logging
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 # log 配置
 logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
@@ -20,8 +22,8 @@ logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 10
-        self.board_height = 10
+        self.board_width = 8
+        self.board_height = 8
         self.n_in_row = 5
         self.board = Board(width=self.board_width,
                            height=self.board_height,

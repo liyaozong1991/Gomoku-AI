@@ -29,9 +29,9 @@ class TrainPipeline():
         # self.board_width = 10
         # self.board_height = 10
         # self.n_in_row = 5
-        self.board_width = 6
-        self.board_height = 6
-        self.n_in_row = 4
+        self.board_width = 12
+        self.board_height = 12
+        self.n_in_row = 5
         # training params
         self.learn_rate = 2e-3
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
@@ -39,7 +39,7 @@ class TrainPipeline():
         self.n_playout = 400  # num of simulations for each move
         self.c_puct = 5
         self.batch_size = 512  # mini-batch size for training
-        self.buffer_num = self.batch_size * 1000
+        self.buffer_num = 10000
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
@@ -57,7 +57,6 @@ class TrainPipeline():
         from policy_value_net_tensorflow import PolicyValueNet
         policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file=model_file)
         policy_value_net.save_model('./current_policy.model')
-        policy_value_net.destroy_model()
         logging.info('init tf net finished')
 
     def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue, net_lock, data_lock):
@@ -87,14 +86,9 @@ class TrainPipeline():
             # 添加对弈数据，加锁
             with data_lock:
                 logging.info('process {}: get date lock'.format(thread_id))
-                #logging.info('process {}:{} get date lock'.format(thread_id, local_id))
                 shared_queue.extend(play_data)
-                if len(shared_queue) > self.buffer_num:
-                    shared_queue = shared_queue[-self.buffer_num:]
-            #logging.info('process {}:{} release data lock'.format(thread_id, local_id))
             logging.info('process {}: release data lock'.format(thread_id))
             logging.info("process {} {}th selfplay finished".format(thread_id, index))
-            current_policy.destroy_model()
         for index in range(self.game_batch_num):
             pro = multiprocessing.Process(target=local_thread_func, args=(thread_id, shared_queue, net_lock, data_lock))
             pro.start()
@@ -152,7 +146,7 @@ class TrainPipeline():
         logging.info('update process save model')
         with net_lock:
             logging.info('update process get net lock')
-            current_policy_value_net.save_model('./current_policy.model', write_meta_graph=False)
+            current_policy_value_net.save_model('./current_policy.model')
         logging.info('update process release net lock')
         logging.info('update process save model finished')
         # adaptively adjust the learning rate
@@ -237,6 +231,13 @@ class TrainPipeline():
             with data_lock:
                 logging.info('update process get data lock')
                 shared_queue_length = len(shared_queue)
+                print('bbb before: ' + str(len(shared_queue)))
+                while len(shared_queue) > self.buffer_num:
+                    shared_queue.pop(0)
+                #if shared_queue_length > self.buffer_num:
+                #    shared_queue = shared_queue[-self.buffer_num:]
+                #    shared_queue_length = len(shared_queue)
+                print('bbb after: ' + str(len(shared_queue)))
             logging.info('update process release data lock')
             if shared_queue_length > self.batch_size:
                 logging.info('update process start {} th self train'.format(i))
@@ -256,7 +257,8 @@ class TrainPipeline():
         try:
             # 必须在一个线程中引入tensorflow，否则会造成其他线程由于错误阻塞。
             # ERROR: could not retrieve CUDA device count: CUDA_ERROR_NOT_INITIALIZED
-            init_process = multiprocessing.Process(target=self.init_tensorflow_net, args=('./current_policy.model',))
+            #init_process = multiprocessing.Process(target=self.init_tensorflow_net, args=('./current_policy.model',))
+            init_process = multiprocessing.Process(target=self.init_tensorflow_net)
             init_process.start()
             init_process.join()
             m = Manager()

@@ -1,3 +1,5 @@
+logs
+running_logs
 checkpoint
 current_policy*
 best_policy*

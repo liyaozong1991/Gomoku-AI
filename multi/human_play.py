@@ -44,8 +44,8 @@ class Human(object):
         return "Human {}".format(self.player)
 
 def run():
-    n = 4
-    width, height = 6, 6
+    n = 5
+    width, height = 8, 8
     model_file = 'best_policy.model'
     try:
         board = Board(width=width, height=height, n_in_row=n)
