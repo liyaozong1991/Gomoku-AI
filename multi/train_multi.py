@@ -39,14 +39,14 @@ class TrainPipeline():
         self.n_playout = 400  # num of simulations for each move
         self.c_puct = 5
         self.batch_size = 512  # mini-batch size for training
-        self.buffer_num = 10000
+        self.buffer_num = self.batch_size * 10
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
         self.check_freq = 4000
-        self.game_batch_num = 100000000
+        self.game_batch_num = 1000000000
         self.local_game_batch_num = 20
-        self.process_num = 5
+        self.process_num = 15
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.main_process_wait_time = 300
@@ -60,7 +60,7 @@ class TrainPipeline():
         logging.info('init tf net finished')
 
     def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue, net_lock, data_lock):
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(thread_id+2)
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(thread_id % 5 + 2)
         logging.info('start selfplay process {}'.format(thread_id))
         def local_thread_func(thread_id, shared_queue, net_lock, data_lock):
             from policy_value_net_tensorflow import PolicyValueNet
