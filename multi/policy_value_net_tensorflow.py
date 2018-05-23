@@ -98,8 +98,11 @@ class PolicyValueNet():
         self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=self.learning_rate).minimize(self.loss)
 
+        config = tf.ConfigProto()
+        config.gpu_options.per_process_gpu_memory_fraction = 0.3
+        config.gpu_options.allow_growth = False
         # Make a session
-        self.session = tf.Session()
+        self.session = tf.Session(config=config)
 
         # calc policy entropy, for monitoring only
         self.entropy = tf.negative(tf.reduce_mean(
