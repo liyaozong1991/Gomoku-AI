@@ -1,9 +1,4 @@
-#!/search/odin/huidu/bin/python3
-# -*- coding: utf-8 -*-
-"""
-An implementation of the training pipeline of AlphaZero for Gomoku
-@author: Junxiao Song
-"""
+# coding: utf8
 
 from __future__ import print_function
 import random
@@ -22,7 +17,7 @@ current_model_name='single/current_policy_model_single'
 best_model_name='single/best_policy_model_single'
 
 # log 配置
-logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+logging.basicConfig(filename=log_name, level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class TrainPipeline():
     def __init__(self, init_model=None):

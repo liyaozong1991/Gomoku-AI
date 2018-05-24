@@ -37,7 +37,8 @@ class TrainPipeline():
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.check_freq = 500
+        self.check_freq = 1000
+        self.update_freq = 5
         self.game_batch_num = 1000000000
         self.process_num = 5
         # num of simulations used for the pure mcts, which is used as
@@ -81,6 +82,8 @@ class TrainPipeline():
             with data_lock:
                 logging.info('selfplay process {} get date lock'.format(thread_id))
                 shared_queue.extend(play_data)
+                while len(shared_queue) > self.buffer_num:
+            	    shared_queue.pop(0)
             logging.info('selfplay process {} release data lock'.format(thread_id))
         logging.info('selfplay process {} all selfpaly start'.format(thread_id))
         for index in range(self.game_batch_num):
@@ -136,12 +139,6 @@ class TrainPipeline():
             )
             if kl > self.kl_targ * 4:  # early stopping if D_KL diverges badly
                 break
-        # 这里更新了模型文件
-        logging.info('update process ask net lock')
-        with net_lock:
-            logging.info('update process get net lock')
-            current_policy_value_net.save_model(current_model_name)
-        logging.info('update process release net lock')
         # adaptively adjust the learning rate
         if kl > self.kl_targ * 2 and self.lr_multiplier > 0.1:
             self.lr_multiplier /= 1.5
@@ -161,9 +158,9 @@ class TrainPipeline():
             entropy,
             explained_var_old,
             explained_var_new))
-        return loss, entropy
+        return
 
-    def policy_evaluate(self, best_win_ratio, pure_mcts_playout_num, current_policy_value_net, n_games=10):
+    def policy_evaluate(self, pure_mcts_playout_num, current_policy_value_net, n_games=10):
         """
         Evaluate the trained policy by playing against the pure MCTS player
         Note: this is only for monitoring the progress of training
@@ -190,16 +187,7 @@ class TrainPipeline():
         logging.info("update process num_playouts:{}, win: {}, lose: {}, tie:{}".format(
                 pure_mcts_playout_num,
                 win_cnt[1], win_cnt[2], win_cnt[-1]))
-        if win_ratio >= best_win_ratio:
-            logging.info("update process New best policy!!!!!!!!")
-            best_win_ratio = win_ratio
-            # update the best_policy
-            current_policy_value_net.save_model(best_model_name)
-            if (best_win_ratio == 1.0 and
-                    pure_mcts_playout_num < 5000):
-                pure_mcts_playout_num += 1000
-                best_win_ratio = 0.0
-        return best_win_ratio, pure_mcts_playout_num
+        return win_ratio
 
     def update_net(self, shared_queue, net_lock, data_lock, stop_update_process):
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
@@ -210,25 +198,37 @@ class TrainPipeline():
         i = 0
         best_win_ratio = 0
         pure_mcts_playout_num = 1000
+        get_enough_train_data = False
         while stop_update_process.value == 0:
-            #with net_lock:
-            with data_lock:
-                logging.info('update process get data lock')
-                shared_queue_length = len(shared_queue)
-                while len(shared_queue) > self.buffer_num:
-                    shared_queue.pop(0)
-            logging.info('update process release data lock')
-            if shared_queue_length > self.batch_size:
-                logging.info('update process start {} th self train'.format(i))
-                loss, entropy = self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock)
-                logging.info('update process end {} th self train'.format(i))
-                # check the performance of the current model,
-                # and save the model params
-                if (i+1) % self.check_freq == 0:
-                    logging.info("Game {}: AlphagZero VS PURE MCTS".format(i+1))
-                    best_win_ratio, pure_mcts_playout_num = self.policy_evaluate(best_win_ratio, pure_mcts_playout_num, current_policy_value_net)
-                i += 1
             time.sleep(1)
+            if get_enough_train_data:
+                i += 1
+                logging.info('update process start {} th self train'.format(i))
+                self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock)
+                logging.info('update process end {} th self train'.format(i))
+                # 这里更新最新模型文件
+                if (i + 1) % self.update_freq == 0:
+                    logging.info('update process ask net lock')
+                    with net_lock:
+                        logging.info('update process get net lock')
+                        current_policy_value_net.save_model(current_model_name)
+                    logging.info('update process release net lock')
+                # 这里和纯MCTS比赛，判断胜率，更新最优模型文件
+                if (i + 1) % self.check_freq == 0:
+                    logging.info("Game {}: AlphagZero VS PURE MCTS".format(i+1))
+                    win_ratio = self.policy_evaluate(pure_mcts_playout_num, current_policy_value_net)
+                    if win_ratio >= best_win_ratio:
+                        logging.info("update process New best policy!!!!!!!!")
+                        best_win_ratio = win_ratio
+                        # update the best_policy
+                        current_policy_value_net.save_model(best_model_name)
+                        if (best_win_ratio == 1.0 and
+                                pure_mcts_playout_num < 5000):
+                            pure_mcts_playout_num += 1000
+                            best_win_ratio = 0.0
+            else:
+                with data_lock:
+                    get_enough_train_data = len(shared_queue) >= self.batch_size
         logging.info('update process finished')
 
     def run(self):
