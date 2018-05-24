@@ -17,15 +17,19 @@ import logging
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
+log_name='single/single_logs'
+current_model_name='single/current_policy_model_single'
+best_model_name='single/best_policy_model_single'
+
 # log 配置
 logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 6
-        self.board_height = 6
-        self.n_in_row = 4
+        self.board_width = 8
+        self.board_height = 8
+        self.n_in_row = 5
         self.board = Board(width=self.board_width,
                            height=self.board_height,
                            n_in_row=self.n_in_row)
@@ -127,18 +131,13 @@ class TrainPipeline():
         explained_var_new = (1 -
                              np.var(np.array(winner_batch) - new_v.flatten()) /
                              np.var(np.array(winner_batch)))
-        logging.info(("kl:{:.5f},"
-               "lr_multiplier:{:.3f},"
-               "loss:{},"
-               "entropy:{},"
-               "explained_var_old:{:.3f},"
-               "explained_var_new:{:.3f}"
-               ).format(kl,
-                        self.lr_multiplier,
-                        loss,
-                        entropy,
-                        explained_var_old,
-                        explained_var_new))
+        logging.info("update process kl:{:.5f},lr_multiplier:{:.3f},loss:{},entropy:{},explained_var_old:{:.3f},explained_var_new:{:.3f}".format(
+            kl,
+            self.lr_multiplier,
+            loss,
+            entropy,
+            explained_var_old,
+            explained_var_new))
         return loss, entropy
 
     def policy_evaluate(self, n_games=10):
@@ -183,18 +182,18 @@ class TrainPipeline():
                 if (i+1) % self.check_freq == 0:
                     logging.info("current self-play batch: {}".format(i+1))
                     win_ratio = self.policy_evaluate()
-                    self.policy_value_net.save_model('./current_policy.model')
+                    self.policy_value_net.save_model(current_model_name)
                     if win_ratio > self.best_win_ratio:
                         logging.info("New best policy!!!!!!!!")
                         self.best_win_ratio = win_ratio
                         # update the best_policy
-                        self.policy_value_net.save_model('./best_policy.model')
+                        self.policy_value_net.save_model(best_model_name)
                         if (self.best_win_ratio == 1.0 and
                                 self.pure_mcts_playout_num < 5000):
                             self.pure_mcts_playout_num += 1000
                             self.best_win_ratio = 0.0
         except KeyboardInterrupt:
-            logging.error('\n\rquit')
+            logging.error('quit')
 
 
 if __name__ == '__main__':

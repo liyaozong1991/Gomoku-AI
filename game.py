@@ -5,23 +5,19 @@
 
 from __future__ import print_function
 import numpy as np
-import logging
-
-# log 配置
-logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class Board(object):
     """board for the game"""
 
     def __init__(self, **kwargs):
-        self.width = int(kwargs.get('width'))
-        self.height = int(kwargs.get('height'))
+        self.width = int(kwargs.get('width', 8))
+        self.height = int(kwargs.get('height', 8))
         # board states stored as a dict,
         # key: move as location on the board,
         # value: player as pieces type
         self.states = {}
         # need how many pieces in a row to win
-        self.n_in_row = int(kwargs.get('n_in_row'))
+        self.n_in_row = int(kwargs.get('n_in_row', 5))
         self.players = [1, 2]  # player1 and player2
 
     def init_board(self, start_player=0):
@@ -188,7 +184,6 @@ class Game(object):
             player_in_turn = players[current_player]
             move = player_in_turn.get_action(self.board)
             self.board.do_move(move)
-            logging.info('update process play with pure step num :{}'.format(len(self.board.states)))
             if is_shown:
                 self.graphic(self.board, player1.player, player2.player)
             end, winner = self.board.game_end()

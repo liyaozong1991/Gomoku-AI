@@ -9,7 +9,6 @@ Tested in Tensorflow 1.4 and 1.5
 import numpy as np
 import tensorflow as tf
 
-
 class PolicyValueNet():
     def __init__(self, board_width, board_height, model_file=None):
         self.board_width = board_width
@@ -103,7 +102,7 @@ class PolicyValueNet():
 
         # Make a session
         config = tf.ConfigProto()
-        config.gpu_options.per_process_gpu_memory_fraction = 0.3
+        config.gpu_options.per_process_gpu_memory_fraction = 0.1
         config.gpu_options.allow_growth = False
         self.session = tf.Session(config=config)
 

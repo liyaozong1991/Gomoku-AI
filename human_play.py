@@ -13,8 +13,7 @@ from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
 from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "7"
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 class Human(object):
     """

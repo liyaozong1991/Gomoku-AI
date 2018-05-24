@@ -1,9 +1,4 @@
-#!/search/odin/huidu/bin/python3
-# -*- coding: utf-8 -*-
-"""
-An implementation of the training pipeline of AlphaZero for Gomoku
-@author: Junxiao Song
-"""
+# coding: utf8
 
 import random
 import numpy as np
@@ -11,27 +6,26 @@ from collections import defaultdict, deque
 from game import Board, Game
 from mcts_pure import MCTSPlayer as MCTS_Pure
 from mcts_alphaZero import MCTSPlayer
-import logging
 import multiprocessing
-import time
 from multiprocessing import Manager, Pool
+import time
+import logging
 import os
-#os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
+log_name='multi/multi_logs'
+current_model_name='multi/current_policy_model_multi'
+best_model_name='multi/best_policy_model_multi'
 
 # log 配置
-
-logging.basicConfig(filename="./logs", level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+logging.basicConfig(filename=log_name, level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class TrainPipeline():
 
     def __init__(self, init_model=None):
         # params of the board and the game
-        # self.board_width = 10
-        # self.board_height = 10
-        # self.n_in_row = 5
-        self.board_width = 6
-        self.board_height = 6
-        self.n_in_row = 4
+        self.board_width = 8
+        self.board_height = 8
+        self.n_in_row = 5
         # training params
         self.learn_rate = 2e-3
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
@@ -43,10 +37,9 @@ class TrainPipeline():
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.check_freq = 1500
+        self.check_freq = 500
         self.game_batch_num = 1000000000
-        self.local_game_batch_num = 20
-        self.process_num = 15
+        self.process_num = 5
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.main_process_wait_time = 300
@@ -56,20 +49,19 @@ class TrainPipeline():
         logging.info('init tf net')
         from policy_value_net_tensorflow import PolicyValueNet
         policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file=model_file)
-        policy_value_net.save_model('./current_policy.model')
+        policy_value_net.save_model(current_model_name)
         logging.info('init tf net finished')
 
     def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue, net_lock, data_lock):
         os.environ["CUDA_VISIBLE_DEVICES"] = str(thread_id % 5 + 2)
-        logging.info('start selfplay process {}'.format(thread_id))
         def local_thread_func(thread_id, shared_queue, net_lock, data_lock):
             from policy_value_net_tensorflow import PolicyValueNet
             # 读取模型文件，加锁
-            logging.info("process {} start {}th selfplay".format(thread_id, index))
+            logging.info("selfplay process {} ask net lock".format(thread_id))
             with net_lock:
-                logging.info('process {} get net lock'.format(thread_id))
-                current_policy = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
-            logging.info('process {} release net lock'.format(thread_id))
+                logging.info('selfpaly process {} get net lock'.format(thread_id))
+                current_policy = PolicyValueNet(self.board_width, self.board_height, model_file=current_model_name)
+            logging.info('selfplay process {} release net lock'.format(thread_id))
             local_board = Board(width=self.board_width,
                                height=self.board_height,
                                n_in_row=self.n_in_row)
@@ -78,22 +70,24 @@ class TrainPipeline():
                                                c_puct=self.c_puct,
                                                n_playout=self.n_playout,
                                                is_selfplay=1)
-            #for local_id in range(self.local_game_batch_num):
+            logging.info("selfplay process {} start {}th selfplay".format(thread_id, index))
             winner, play_data = local_game.start_self_play(local_mcts_player,
                                                            temp=self.temp)
+            logging.info("selfplay process {} finish {}th selfplay".format(thread_id, index))
             play_data = list(play_data)
             play_data = self.get_equi_data(play_data)
             # 添加对弈数据，加锁
+            logging.info('selfplay process {} ask date lock'.format(thread_id))
             with data_lock:
-                logging.info('process {}: get date lock'.format(thread_id))
+                logging.info('selfplay process {} get date lock'.format(thread_id))
                 shared_queue.extend(play_data)
-            logging.info('process {}: release data lock'.format(thread_id))
-            logging.info("process {} {}th selfplay finished".format(thread_id, index))
+            logging.info('selfplay process {} release data lock'.format(thread_id))
+        logging.info('selfplay process {} all selfpaly start'.format(thread_id))
         for index in range(self.game_batch_num):
             pro = multiprocessing.Process(target=local_thread_func, args=(thread_id, shared_queue, net_lock, data_lock))
             pro.start()
             pro.join()
-        logging.info('process {} all selfpaly finished'.format(thread_id))
+        logging.info('selfplay process {} all selfpaly finished'.format(thread_id))
 
     def get_equi_data(self, play_data):
         """augment the data set by rotation and flipping
@@ -143,12 +137,11 @@ class TrainPipeline():
             if kl > self.kl_targ * 4:  # early stopping if D_KL diverges badly
                 break
         # 这里更新了模型文件
-        logging.info('update process save model')
+        logging.info('update process ask net lock')
         with net_lock:
             logging.info('update process get net lock')
-            current_policy_value_net.save_model('./current_policy.model')
+            current_policy_value_net.save_model(current_model_name)
         logging.info('update process release net lock')
-        logging.info('update process save model finished')
         # adaptively adjust the learning rate
         if kl > self.kl_targ * 2 and self.lr_multiplier > 0.1:
             self.lr_multiplier /= 1.5
@@ -161,18 +154,13 @@ class TrainPipeline():
         explained_var_new = (1 -
                              np.var(np.array(winner_batch) - new_v.flatten()) /
                              np.var(np.array(winner_batch)))
-        logging.info(("kl:{:.5f},"
-               "lr_multiplier:{:.3f},"
-               "loss:{},"
-               "entropy:{},"
-               "explained_var_old:{:.3f},"
-               "explained_var_new:{:.3f}"
-               ).format(kl,
-                        self.lr_multiplier,
-                        loss,
-                        entropy,
-                        explained_var_old,
-                        explained_var_new))
+        logging.info("update process kl:{:.5f},lr_multiplier:{:.3f},loss:{},entropy:{},explained_var_old:{:.3f},explained_var_new:{:.3f}".format(
+            kl,
+            self.lr_multiplier,
+            loss,
+            entropy,
+            explained_var_old,
+            explained_var_new))
         return loss, entropy
 
     def policy_evaluate(self, best_win_ratio, pure_mcts_playout_num, current_policy_value_net, n_games=10):
@@ -190,25 +178,23 @@ class TrainPipeline():
                       height=self.board_height,
                       n_in_row=self.n_in_row)
         game = Game(board)
-        logging.info('update process with pure mcts game start')
+        logging.info('update process alphazero with pure mcts game start')
         for i in range(n_games):
-            logging.info('update process with pure mcts game {} start'.format(i))
             winner = game.start_play(current_mcts_player,
                                           pure_mcts_player,
                                           start_player=i % 2,
                                           is_shown=0)
             win_cnt[winner] += 1
-            logging.info('update process with pure mcts game {} finished'.format(i))
-        logging.info('update process with pure mcts game all finished'.format(i))
+        logging.info('update process alphazero with pure mcts game finished')
         win_ratio = 1.0*(win_cnt[1] + 0.5*win_cnt[-1]) / n_games
-        logging.info("num_playouts:{}, win: {}, lose: {}, tie:{}".format(
+        logging.info("update process num_playouts:{}, win: {}, lose: {}, tie:{}".format(
                 pure_mcts_playout_num,
                 win_cnt[1], win_cnt[2], win_cnt[-1]))
         if win_ratio >= best_win_ratio:
-            logging.info("New best policy!!!!!!!!")
+            logging.info("update process New best policy!!!!!!!!")
             best_win_ratio = win_ratio
             # update the best_policy
-            current_policy_value_net.save_model('./best_policy.model')
+            current_policy_value_net.save_model(best_model_name)
             if (best_win_ratio == 1.0 and
                     pure_mcts_playout_num < 5000):
                 pure_mcts_playout_num += 1000
@@ -218,10 +204,9 @@ class TrainPipeline():
     def update_net(self, shared_queue, net_lock, data_lock, stop_update_process):
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
         from policy_value_net_tensorflow import PolicyValueNet
+        logging.info('update process start')
         # 读取和写入模型文
-        with net_lock:
-            current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file = './current_policy.model')
-        logging.info('update process release net lock')
+        current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file=current_model_name)
         i = 0
         best_win_ratio = 0
         pure_mcts_playout_num = 1000
@@ -240,7 +225,7 @@ class TrainPipeline():
                 # check the performance of the current model,
                 # and save the model params
                 if (i+1) % self.check_freq == 0:
-                    logging.info("update process current self-play batch: {}".format(i+1))
+                    logging.info("Game {}: AlphagZero VS PURE MCTS".format(i+1))
                     best_win_ratio, pure_mcts_playout_num = self.policy_evaluate(best_win_ratio, pure_mcts_playout_num, current_policy_value_net)
                 i += 1
             time.sleep(1)
@@ -251,7 +236,6 @@ class TrainPipeline():
         try:
             # 必须在一个线程中引入tensorflow，否则会造成其他线程由于错误阻塞。
             # ERROR: could not retrieve CUDA device count: CUDA_ERROR_NOT_INITIALIZED
-            #init_process = multiprocessing.Process(target=self.init_tensorflow_net, args=('./current_policy.model',))
             init_process = multiprocessing.Process(target=self.init_tensorflow_net)
             init_process.start()
             init_process.join()
@@ -279,7 +263,7 @@ class TrainPipeline():
                     stop_update_process.value = 1
                 time.sleep(60)
         except Exception as e:
-            logging.error('\n\rquit')
+            logging.error('quit')
 
 if __name__ == '__main__':
     training_pipeline = TrainPipeline()
