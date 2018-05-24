@@ -1,4 +1,4 @@
-#!/search/huidu/tools/python3.6/bin/python3
+#!/search/odin/huidu/bin/python3
 # -*- coding: utf-8 -*-
 """
 An implementation of the training pipeline of AlphaZero for Gomoku
@@ -29,9 +29,9 @@ class TrainPipeline():
         # self.board_width = 10
         # self.board_height = 10
         # self.n_in_row = 5
-        self.board_width = 12
-        self.board_height = 12
-        self.n_in_row = 5
+        self.board_width = 6
+        self.board_height = 6
+        self.n_in_row = 4
         # training params
         self.learn_rate = 2e-3
         self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
@@ -39,11 +39,11 @@ class TrainPipeline():
         self.n_playout = 400  # num of simulations for each move
         self.c_puct = 5
         self.batch_size = 512  # mini-batch size for training
-        self.buffer_num = self.batch_size * 10
+        self.buffer_num = self.batch_size * 100
         self.play_batch_size = 1
         self.epochs = 5  # num of train_steps for each update
         self.kl_targ = 0.02
-        self.check_freq = 4000
+        self.check_freq = 1500
         self.game_batch_num = 1000000000
         self.local_game_batch_num = 20
         self.process_num = 15

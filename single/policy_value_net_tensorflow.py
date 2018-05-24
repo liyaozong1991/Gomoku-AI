@@ -20,30 +20,32 @@ class PolicyValueNet():
         self.input_states = tf.placeholder(
                 tf.float32,
                 shape=[None, 4, board_height, board_width])
-        self.input_states_reshaped = tf.reshape(
-                self.input_states,
-                [-1, board_height, board_width, 4])
         # 2. Common Networks Layers
-        self.conv1 = tf.layers.conv2d(inputs=self.input_states_reshaped,
+        self.conv1 = tf.layers.conv2d(inputs=self.input_states,
                                       filters=32,
                                       kernel_size=[3, 3],
                                       padding="same",
+                                      data_format="channels_first",
                                       activation=tf.nn.relu)
         self.conv2 = tf.layers.conv2d(inputs=self.conv1,
                                       filters=64,
                                       kernel_size=[3, 3],
                                       padding="same",
+                                      data_format="channels_first",
                                       activation=tf.nn.relu)
         self.conv3 = tf.layers.conv2d(inputs=self.conv2,
                                       filters=128,
                                       kernel_size=[3, 3],
                                       padding="same",
+                                      data_format="channels_first",
                                       activation=tf.nn.relu)
         # 3-1 Action Networks
+        #print(self.conv3.get_shape())
         self.action_conv = tf.layers.conv2d(inputs=self.conv3,
                                             filters=4,
                                             kernel_size=[1, 1],
                                             padding="same",
+                                            data_format="channels_first",
                                             activation=tf.nn.relu)
         # Flatten the tensor
         self.action_conv_flat = tf.reshape(
@@ -58,6 +60,7 @@ class PolicyValueNet():
                                                 filters=2,
                                                 kernel_size=[1, 1],
                                                 padding="same",
+                                                data_format="channels_first",
                                                 activation=tf.nn.relu)
         self.evaluation_conv_flat = tf.reshape(
                 self.evaluation_conv, [-1, 2 * board_height * board_width])
@@ -99,7 +102,10 @@ class PolicyValueNet():
                 learning_rate=self.learning_rate).minimize(self.loss)
 
         # Make a session
-        self.session = tf.Session()
+        config = tf.ConfigProto()
+        config.gpu_options.per_process_gpu_memory_fraction = 0.3
+        config.gpu_options.allow_growth = False
+        self.session = tf.Session(config=config)
 
         # calc policy entropy, for monitoring only
         self.entropy = tf.negative(tf.reduce_mean(
