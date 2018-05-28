@@ -1,3 +1,4 @@
+#!/search/odin/liyaozong/tools/python3/bin/python3
 # coding: utf8
 
 from __future__ import print_function

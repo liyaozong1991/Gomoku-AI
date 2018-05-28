@@ -1,3 +1,4 @@
+#!/search/odin/liyaozong/tools/python3/bin/python3
 # coding: utf8
 
 import random
@@ -83,7 +84,7 @@ class TrainPipeline():
                 logging.info('selfplay process {} get date lock'.format(thread_id))
                 shared_queue.extend(play_data)
                 while len(shared_queue) > self.buffer_num:
-            	    shared_queue.pop(0)
+                    shared_queue.pop(0)
             logging.info('selfplay process {} release data lock'.format(thread_id))
         logging.info('selfplay process {} all selfpaly start'.format(thread_id))
         for index in range(self.game_batch_num):

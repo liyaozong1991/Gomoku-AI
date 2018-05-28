@@ -15,6 +15,13 @@ from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
+model_file='single/best_policy_model_single'
+#model_file='multi/best_policy_model_multi'
+import sys
+if len(sys.argv) >= 2:
+    model_file = sys.argv[1]
+
+
 class Human(object):
     """
     human player
@@ -45,7 +52,6 @@ class Human(object):
 def run():
     n = 5
     width, height = 8, 8
-    model_file = 'best_policy.model'
     try:
         board = Board(width=width, height=height, n_in_row=n)
         game = Game(board)
@@ -54,7 +60,7 @@ def run():
         # load the trained policy_value_net in either Theano/Lasagne, PyTorch or TensorFlow
 
         best_policy = PolicyValueNet(width, height, model_file = model_file)
-        mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=400)
+        mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=2000)
 
         # uncomment the following line to play with pure MCTS (it's much weaker even with a larger n_playout)
         # mcts_player = MCTS_Pure(c_puct=5, n_playout=1000)
