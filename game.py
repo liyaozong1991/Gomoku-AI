@@ -195,6 +195,41 @@ class Game(object):
                         print("Game end. Tie")
                 return winner
 
+    def two_net_play(self, player1, player2, start_player=0, is_shown=1):
+        """start a game between two players"""
+        if start_player not in (0, 1):
+            raise Exception('start_player should be either 0 (player1 first) '
+                            'or 1 (player2 first)')
+        import multiprocessing
+        def get_net_player_next_action(player, board, share_move, i):
+            from policy_value_net_tensorflow import PolicyValueNet
+            from mcts_alphaZero import MCTSPlayer
+            best_policy = PolicyValueNet(board.width, board.height, model_file=player)
+            mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=400)
+            share_move.value = mcts_player.get_action(board)
+        self.board.init_board(start_player)
+        share_move = multiprocessing.Value('i', 0)
+        while True:
+            current_player = self.board.get_current_player()
+            if current_player == 1:
+                player_in_turn = player1
+            else:
+                player_in_turn = player2
+            now_player = multiprocessing.Process(target=get_net_player_next_action, args=(player_in_turn, self.board, share_move, current_player))
+            now_player.start()
+            now_player.join()
+            move = share_move.value
+            self.board.do_move(move)
+            self.graphic(self.board, start_player + 1, 2 - start_player)
+            end, winner = self.board.game_end()
+            if end:
+                if winner != -1:
+                    print("Game end. Winner is", winner)
+                else:
+                    print("Game end. Tie")
+                return winner
+
+
     def start_self_play(self, player, is_shown=0, temp=1e-3):
         """ start a self-play game using a MCTS player, reuse the search tree,
         and store the self-play data: (state, mcts_probs, z) for training
