@@ -13,9 +13,10 @@ import time
 import logging
 import os
 
-log_name='multi/multi_logs'
-current_model_name='multi/current_policy_model_multi'
-best_model_name='multi/best_policy_model_multi'
+model_dir='multi'
+log_name = model_dir + '/logs'
+current_model_name = model_dir + '/current_policy_model'
+best_model_name = model_dir + '/best_policy_model'
 
 # log 配置
 logging.basicConfig(filename=log_name, level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
@@ -24,8 +25,8 @@ class TrainPipeline():
 
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 8
-        self.board_height = 8
+        self.board_width = 12
+        self.board_height = 12
         self.n_in_row = 5
         # training params
         self.learn_rate = 2e-3
@@ -42,6 +43,7 @@ class TrainPipeline():
         self.update_freq = 5
         self.game_batch_num = 1000000000
         self.process_num = 5
+        self.summary_record_freq = 100
         # num of simulations used for the pure mcts, which is used as
         # the opponent to evaluate the trained policy
         self.main_process_wait_time = 300
@@ -50,8 +52,7 @@ class TrainPipeline():
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
         logging.info('init tf net')
         from policy_value_net_tensorflow import PolicyValueNet
-        policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file=model_file)
-        policy_value_net.save_model(current_model_name)
+        policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_dir, model_file=model_file)
         logging.info('init tf net finished')
 
     def collect_selfplay_data_for_multi_threads(self, thread_id, shared_queue, net_lock, data_lock):
@@ -62,7 +63,7 @@ class TrainPipeline():
             logging.info("selfplay process {} ask net lock".format(thread_id))
             with net_lock:
                 logging.info('selfpaly process {} get net lock'.format(thread_id))
-                current_policy = PolicyValueNet(self.board_width, self.board_height, model_file=current_model_name)
+                current_policy = PolicyValueNet(self.board_width, self.board_height, model_dir, model_file=current_model_name)
             logging.info('selfplay process {} release net lock'.format(thread_id))
             local_board = Board(width=self.board_width,
                                height=self.board_height,
@@ -115,7 +116,7 @@ class TrainPipeline():
                                     winner))
         return extend_data
 
-    def policy_update(self, current_policy_value_net, shared_queue, net_lock, data_lock):
+    def policy_update(self, current_policy_value_net, shared_queue, net_lock, data_lock, index):
         """update the policy-value net"""
         with data_lock:
             random_index = list(range(len(shared_queue)))
@@ -159,6 +160,14 @@ class TrainPipeline():
             entropy,
             explained_var_old,
             explained_var_new))
+        # summary for tensorboard
+        if index % self.summary_record_freq == 0:
+            current_policy_value_net.summary_record(
+                    state_batch,
+                    mcts_probs_batch,
+                    winner_batch,
+                    index,
+                    )
         return
 
     def policy_evaluate(self, pure_mcts_playout_num, current_policy_value_net, n_games=10):
@@ -195,7 +204,8 @@ class TrainPipeline():
         from policy_value_net_tensorflow import PolicyValueNet
         logging.info('update process start')
         # 读取和写入模型文
-        current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_file=current_model_name)
+        current_policy_value_net = PolicyValueNet(self.board_width, self.board_height, model_dir)
+        current_policy_value_net.save_model(current_model_name)
         i = 0
         best_win_ratio = 0
         pure_mcts_playout_num = 1000
@@ -205,7 +215,7 @@ class TrainPipeline():
             if get_enough_train_data:
                 i += 1
                 logging.info('update process start {} th self train'.format(i))
-                self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock)
+                self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock, i)
                 logging.info('update process end {} th self train'.format(i))
                 # 这里更新最新模型文件
                 if (i + 1) % self.update_freq == 0:
@@ -237,21 +247,19 @@ class TrainPipeline():
         try:
             # 必须在一个线程中引入tensorflow，否则会造成其他线程由于错误阻塞。
             # ERROR: could not retrieve CUDA device count: CUDA_ERROR_NOT_INITIALIZED
-            init_process = multiprocessing.Process(target=self.init_tensorflow_net)
-            init_process.start()
-            init_process.join()
             m = Manager()
             shared_queue = m.list()
             net_lock = m.Lock()
             data_lock = m.Lock()
             stop_update_process = multiprocessing.Value('i', 0)
+            update_process = multiprocessing.Process(target=self.update_net, args=(shared_queue, net_lock, data_lock, stop_update_process))
+            update_process.start()
+            time.sleep(5)
             pro_list = []
             for i in range(self.process_num):
                 pro = multiprocessing.Process(target=self.collect_selfplay_data_for_multi_threads, args=(i, shared_queue, net_lock, data_lock))
                 pro_list.append(pro)
                 pro.start()
-            update_process = multiprocessing.Process(target=self.update_net, args=(shared_queue, net_lock, data_lock, stop_update_process))
-            update_process.start()
             # 保证模型基本启动完成
             time.sleep(self.main_process_wait_time)
             all_finished = True

@@ -13,9 +13,10 @@ import logging
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
-log_name='single/single_logs'
-current_model_name='single/current_policy_model_single'
-best_model_name='single/best_policy_model_single'
+model_dir='single'
+log_name = model_dir + '/logs'
+current_model_name = model_dir + '/current_policy_model'
+best_model_name = model_dir + '/best_policy_model'
 
 # log 配置
 logging.basicConfig(filename=log_name, level=logging.INFO, format="[%(levelname)s]\t%(asctime)s\tLINENO:%(lineno)d\t%(message)s", datefmt="%Y-%m-%d %H:%M:%S")
@@ -23,8 +24,8 @@ logging.basicConfig(filename=log_name, level=logging.INFO, format="[%(levelname)
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 8
-        self.board_height = 8
+        self.board_width = 12
+        self.board_height = 12
         self.n_in_row = 5
         self.board = Board(width=self.board_width,
                            height=self.board_height,
@@ -52,11 +53,13 @@ class TrainPipeline():
             # start training from an initial policy-value net
             self.policy_value_net = PolicyValueNet(self.board_width,
                                                    self.board_height,
+                                                   model_dir,
                                                    model_file=init_model)
         else:
             # start training from a new policy-value net
             self.policy_value_net = PolicyValueNet(self.board_width,
-                                                   self.board_height)
+                                                   self.board_height,
+                                                   model_dir)
         self.mcts_player = MCTSPlayer(self.policy_value_net.policy_value_fn,
                                       c_puct=self.c_puct,
                                       n_playout=self.n_playout,
@@ -95,7 +98,7 @@ class TrainPipeline():
             play_data = self.get_equi_data(play_data)
             self.data_buffer.extend(play_data)
 
-    def policy_update(self):
+    def policy_update(self, index):
         """update the policy-value net"""
         mini_batch = random.sample(self.data_buffer, self.batch_size)
         state_batch = [data[0] for data in mini_batch]
@@ -134,6 +137,14 @@ class TrainPipeline():
             entropy,
             explained_var_old,
             explained_var_new))
+        # summary for tensorboard
+        if index % 5 == 0:
+            self.policy_value_net.summary_record(
+                    state_batch,
+                    mcts_probs_batch,
+                    winner_batch,
+                    index,
+                    )
         return loss, entropy
 
     def policy_evaluate(self, n_games=10):
@@ -171,7 +182,7 @@ class TrainPipeline():
                         i+1, self.episode_len))
                 if len(self.data_buffer) > self.batch_size:
                     logging.info('start update policy')
-                    loss, entropy = self.policy_update()
+                    loss, entropy = self.policy_update(i)
                     logging.info('end update policy')
                 # check the performance of the current model,
                 # and save the model params

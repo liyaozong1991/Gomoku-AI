@@ -12,8 +12,8 @@ from game import Board, Game
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-model_file_single='single/best_policy_model_single'
-model_file_multi='multi/best_policy_model_multi'
+model_file_single='model_record/best_policy_model_single'
+model_file_multi='model_record/best_policy_model_multi'
 
 def run():
     n = 5
@@ -23,7 +23,7 @@ def run():
         game = Game(board)
 
         # set start_player=0 for single first
-        game.two_net_play(model_file_single, model_file_multi, start_player=1)
+        game.two_net_play(model_file_single, model_file_multi, start_player=0)
     except KeyboardInterrupt:
         print('quit')
 

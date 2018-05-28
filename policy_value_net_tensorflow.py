@@ -10,9 +10,10 @@ import numpy as np
 import tensorflow as tf
 
 class PolicyValueNet():
-    def __init__(self, board_width, board_height, model_file=None):
+    def __init__(self, board_width, board_height, model_dir, model_file=None):
         self.board_width = board_width
         self.board_height = board_height
+        self.model_dir = model_dir
 
         # Define the tensorflow neural network
         # 1. Input:
@@ -94,6 +95,10 @@ class PolicyValueNet():
         # 3-4 Add up to be the Loss function
         self.loss = self.value_loss + self.policy_loss + l2_penalty
 
+        tf.summary.scalar('value_loss', self.value_loss)
+        tf.summary.scalar('policy_loss', self.policy_loss)
+        tf.summary.scalar('loss', self.loss)
+
         # Define the optimizer we use for training
         self.learning_rate = tf.placeholder(tf.float32)
 
@@ -116,8 +121,12 @@ class PolicyValueNet():
 
         # For saving and restoring
         self.saver = tf.train.Saver()
+        self.summary_op = tf.summary.merge_all()
         if model_file is not None:
             self.restore_model(model_file)
+        else:
+            # 从0开始训练
+            self.summary_writer = tf.summary.FileWriter(self.model_dir, graph=self.session.graph)
 
     def policy_value(self, state_batch):
         """
@@ -154,6 +163,17 @@ class PolicyValueNet():
                            self.labels: winner_batch,
                            self.learning_rate: lr})
         return loss, entropy
+
+    def summary_record(self, state_batch, mcts_probs, winner_batch, step):
+        """perform a training step"""
+        winner_batch = np.reshape(winner_batch, (-1, 1))
+        summary_str = self.session.run(
+                self.summary_op,
+                feed_dict={self.input_states: state_batch,
+                           self.mcts_probs: mcts_probs,
+                           self.labels: winner_batch,}
+                )
+        self.summary_writer.add_summary(summary_str, step)
 
     def save_model(self, model_path):
         self.saver.save(self.session, model_path)

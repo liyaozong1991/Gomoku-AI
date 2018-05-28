@@ -15,8 +15,8 @@ from policy_value_net_tensorflow import PolicyValueNet # Tensorflow
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-model_file='single/best_policy_model_single'
-#model_file='multi/best_policy_model_multi'
+#model_file='model_record/best_policy_model_single'
+model_file='model_record/best_policy_model_multi'
 import sys
 if len(sys.argv) >= 2:
     model_file = sys.argv[1]
