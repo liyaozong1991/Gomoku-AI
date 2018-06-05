@@ -5,39 +5,34 @@
 
 from __future__ import print_function
 import numpy as np
+import multiprocessing
+import time
+from multiprocessing import Process, Manager
 
 class Board(object):
     """board for the game"""
 
     def __init__(self, **kwargs):
-        self.width = int(kwargs.get('width', 8))
-        self.height = int(kwargs.get('height', 8))
-        # board states stored as a dict,
+        self.width = int(kwargs.get('width', 12))
+        self.height = int(kwargs.get('height', 12))
+        self.n_in_row = int(kwargs.get('n_in_row', 5))
         # key: move as location on the board,
         # value: player as pieces type
         self.states = {}
         # need how many pieces in a row to win
-        self.n_in_row = int(kwargs.get('n_in_row', 5))
-        self.players = [1, 2]  # player1 and player2
+        # self.players = [1, 2]  # player1 and player2
 
     def init_board(self, start_player=0):
         if self.width < self.n_in_row or self.height < self.n_in_row:
-            raise Exception('board width and height can not be '
-                            'less than {}'.format(self.n_in_row))
-        self.current_player = self.players[start_player]  # start player
+            raise Exception('board width and height can not be less than {}'.format(self.n_in_row))
+        self.start_player = start_player
+        self.current_player = start_player  # start player
         # keep available moves in a list
         self.availables = list(range(self.width * self.height))
         self.states = {}
         self.last_move = -1
 
     def move_to_location(self, move):
-        """
-        3*3 board's moves like:
-        6 7 8
-        3 4 5
-        0 1 2
-        and move 5's location is (1,2)
-        """
         h = move // self.width
         w = move % self.width
         return [h, w]
@@ -54,9 +49,10 @@ class Board(object):
 
     def current_state(self):
         """return the board state from the perspective of the current player.
-        state shape: 4*width*height
+        state shape: 4 * width * height
         """
-        square_state = np.zeros((4, self.width, self.height))
+        # square_state = np.zeros((4, self.width, self.height))
+        square_state = np.zeros((3, self.width, self.height))
         if self.states:
             moves, players = np.array(list(zip(*self.states.items())))
             move_curr = moves[players == self.current_player]
@@ -69,21 +65,21 @@ class Board(object):
                             move_oppo % self.height] = 1.0
             # indicate the last move location
             # 最后一个子的落子位置
-            square_state[2][self.last_move // self.width,
-                            self.last_move % self.height] = 1.0
-        # 这里没有太看懂，代表最后一个落子方？
-        if len(self.states) % 2 == 0:
-            square_state[3][:, :] = 1.0  # indicate the colour to play
-        # 这个return写法也没有搞懂，直接返回square_state不好吗？
-        return square_state[:, ::-1, :]
+            #square_state[2][self.last_move // self.width,
+            #                self.last_move % self.height] = 1.0
+        square_state[2] = self.current_player
+        #if len(self.states) % 2 == 0:
+        #    square_state[3][:, :] = 1.0  # indicate the colour to play
+        #   square_state[2] = self.start_player  # indicate the current player
+        #else:
+        #    square_state[2] = 1 - self.start_player
+        #return square_state[:, ::-1, :]
+        return square_state
 
     def do_move(self, move):
         self.states[move] = self.current_player
         self.availables.remove(move)
-        self.current_player = (
-            self.players[0] if self.current_player == self.players[1]
-            else self.players[1]
-        )
+        self.current_player = 1 - self.current_player
         self.last_move = move
 
     def has_a_winner(self):
@@ -91,37 +87,84 @@ class Board(object):
         height = self.height
         states = self.states
         n = self.n_in_row
-
-        moved = list(set(range(width * height)) - set(self.availables))
-        if len(moved) < self.n_in_row + 2:
+        if len(states) < n * 2 - 1:
             return False, -1
+        player = states[self.last_move]
+        self.last_move_height = self.last_move // width
+        self.last_move_width =  self.last_move % width
 
-        #TODO: 每次判断局面时，会遍历所有的落子点，应该只考虑和最终落子点相连的点就行了
-        for m in moved:
-            h = m // width
-            w = m % width
-            player = states[m]
-
-            # 判断横向
-            if (w in range(width - n + 1) and
-                    len(set(states.get(i, -1) for i in range(m, m + n))) == 1):
-                return True, player
-
-            # 纵向判断
-            if (h in range(height - n + 1) and
-                    len(set(states.get(i, -1) for i in range(m, m + n * width, width))) == 1):
-                return True, player
-
-            # 向右下判断
-            if (w in range(width - n + 1) and h in range(height - n + 1) and
-                    len(set(states.get(i, -1) for i in range(m, m + n * (width + 1), width + 1))) == 1):
-                return True, player
-
-            # 向左下判断
-            if (w in range(n - 1, width) and h in range(height - n + 1) and
-                    len(set(states.get(i, -1) for i in range(m, m + n * (width - 1), width - 1))) == 1):
-                return True, player
-
+        # '——' 方向判断 
+        num = 1
+        temp_height = self.last_move_height
+        temp_width = self.last_move_width + 1
+        while temp_width < width and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_width += 1
+        temp_height = self.last_move_height
+        temp_width = self.last_move_width - 1
+        while temp_width >= 0 and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_width -= 1
+        if num >= self.n_in_row:
+            return True, player
+        # '|' 方向判断
+        num = 1
+        temp_height = self.last_move_height + 1
+        temp_width = self.last_move_width
+        while temp_height < height and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_height += 1
+        temp_height = self.last_move_height - 1
+        temp_width = self.last_move_width
+        while temp_height >= 0 and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_height -= 1
+        if num >= self.n_in_row:
+            return True, player
+        # '\' 方向判断
+        num = 1
+        temp_height = self.last_move_height + 1
+        temp_width = self.last_move_width + 1
+        while temp_width < width and\
+                temp_height < height and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_width += 1
+            temp_height += 1
+        temp_height = self.last_move_height - 1
+        temp_width = self.last_move_width - 1
+        while temp_width >= 0 and\
+                temp_height >= 0 and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_width -= 1
+            temp_height -= 1
+        if num >= self.n_in_row:
+            return True, player
+        # '/' 方向判断
+        num = 1
+        temp_height = self.last_move_height - 1
+        temp_width = self.last_move_width + 1
+        while temp_width < width and\
+                temp_height >= 0 and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_width += 1
+            temp_height -= 1
+        temp_height = self.last_move_height + 1
+        temp_width = self.last_move_width - 1
+        while temp_width >= 0 and\
+                temp_height < height and\
+                states.get(self.location_to_move([temp_height, temp_width]), -1) == player:
+            num += 1
+            temp_width -= 1
+            temp_height += 1
+        if num >= self.n_in_row:
+            return True, player
         return False, -1
 
     def game_end(self):
@@ -129,7 +172,7 @@ class Board(object):
         win, winner = self.has_a_winner()
         if win:
             return True, winner
-        elif not len(self.availables):
+        elif len(self.availables) == 0:
             return True, -1
         return False, -1
 
@@ -143,13 +186,13 @@ class Game(object):
     def __init__(self, board, **kwargs):
         self.board = board
 
-    def graphic(self, board, player1, player2):
+    def graphic(self, board):
         """Draw the board and show game info"""
         width = board.width
         height = board.height
 
-        print("Player", player1, "with X".rjust(3))
-        print("Player", player2, "with O".rjust(3))
+        print("Player", 0, "with O".rjust(3))
+        print("Player", 1, "with X".rjust(3))
         print()
         print(' '*6, end='')
         for x in range(width):
@@ -160,12 +203,12 @@ class Game(object):
             for j in range(width):
                 loc = i * width + j
                 p = board.states.get(loc, -1)
-                if p == player1:
+                if p == 0:
                     print(' '*6, end='')
-                    print('\033[0;31;40mX\033[0m', end='')
-                elif p == player2:
+                    print('\033[0;31;40mO\033[0m', end='')
+                elif p == 1:
                     print(' '*6, end='')
-                    print('\033[0;36;40m0\033[0m', end='')
+                    print('\033[0;36;40mX\033[0m', end='')
                 else:
                     print(' '*6, end='')
                     print('_', end='')
@@ -177,69 +220,132 @@ class Game(object):
             raise Exception('start_player should be either 0 (player1 first) '
                             'or 1 (player2 first)')
         self.board.init_board(start_player)
-        p1, p2 = self.board.players
-        player1.set_player_ind(p1)
-        player2.set_player_ind(p2)
-        players = {p1: player1, p2: player2}
+        player1.set_player_ind(0)
+        player2.set_player_ind(1)
+        players_list = [player1, player2]
         if is_shown:
-            self.graphic(self.board, player1.player, player2.player)
+            self.graphic(self.board)
         while True:
-            current_player = self.board.get_current_player()
-            player_in_turn = players[current_player]
-            move = player_in_turn.get_action(self.board)
+            current_player = players_list[self.board.get_current_player()]
+            move = current_player.get_action(self.board)
             self.board.do_move(move)
             if is_shown:
-                self.graphic(self.board, player1.player, player2.player)
+                self.graphic(self.board)
             end, winner = self.board.game_end()
             if end:
                 if is_shown:
                     if winner != -1:
-                        print("Game end. Winner is", players[winner])
+                        print("Game end. Winner is", players_list[winner])
                     else:
                         print("Game end. Tie")
                 return winner
 
-    def two_net_play(self, player1, player2, start_player=0, is_shown=1):
+    def two_net_play(self, player1, player2, net_lock, start_player=0, is_shown=1):
         """start a game between two players"""
         if start_player not in (0, 1):
             raise Exception('start_player should be either 0 (player1 first) '
                             'or 1 (player2 first)')
-        import multiprocessing
-        def get_net_player_next_action(player, board, share_move, i):
+        def get_net_player_next_action(
+                player,
+                i,
+                shared_board_states,
+                shared_board_availables,
+                shared_board_last_move,
+                shared_board_current_player,
+                game_continue,
+                winner,
+                play_lock,
+                net_lock,
+                ):
             from policy_value_net_tensorflow import PolicyValueNet
             from mcts_alphaZero import MCTSPlayer
-            best_policy = PolicyValueNet(board.width, board.height, model_file=player)
-            mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=400)
-            share_move.value = mcts_player.get_action(board)
-        self.board.init_board(start_player)
-        share_move = multiprocessing.Value('i', 0)
-        while True:
-            current_player = self.board.get_current_player()
-            if current_player == 1:
-                player_in_turn = player1
-            else:
-                player_in_turn = player2
-            now_player = multiprocessing.Process(target=get_net_player_next_action, args=(player_in_turn, self.board, share_move, current_player))
-            now_player.start()
-            now_player.join()
-            move = share_move.value
-            self.board.do_move(move)
-            self.graphic(self.board, start_player + 1, 2 - start_player)
-            end, winner = self.board.game_end()
-            if end:
-                if winner != -1:
-                    print("Game end. Winner is", winner)
-                else:
-                    print("Game end. Tie")
-                return winner
-
-
+            local_board = Board(width=self.board.width, height=self.board.height, n_in_row=self.board.n_in_row)
+            local_board.init_board(start_player)
+            with net_lock:
+                policy = PolicyValueNet(local_board.width, local_board.height, model_file=player)
+            mcts_player = MCTSPlayer(policy.policy_value_fn, c_puct=5, n_playout=400)
+            while game_continue.value == 1:
+                if shared_board_current_player.value == i:
+                    with play_lock:
+                        # 必须进行同步，好麻烦
+                        for k,v in shared_board_states.items():
+                            local_board.states[k] = v
+                        local_board.availables = []
+                        for availables in shared_board_availables:
+                            local_board.availables.append(availables)
+                        local_board.last_move = shared_board_last_move.value
+                        local_board.current_player = shared_board_current_player.value
+                        # 同步结束
+                        move = mcts_player.get_action(local_board)
+                        local_board.do_move(move)
+                        #print('player {} do move {}'.format(i, move))
+                        if is_shown:
+                            self.graphic(local_board)
+                        end, win = local_board.game_end()
+                        if end:
+                            if win != -1:
+                                print("Game end. Winner is", win)
+                            else:
+                                print("Game end. Tie")
+                            game_continue.value = 0
+                            winner.value = win
+                        # 继续同步
+                        shared_board_states[move] = shared_board_current_player.value
+                        shared_board_availables.remove(move)
+                        shared_board_last_move.value = move
+                        shared_board_current_player.value = 1 - shared_board_current_player.value
+                time.sleep(0.2)
+        game_continue = multiprocessing.Value('i', 1)
+        winner = multiprocessing.Value('i', -1)
+        m = Manager()
+        # play lock
+        play_lock = m.Lock()
+        # shared board states
+        shared_board_states = m.dict()
+        shared_board_availables = m.list(range(self.board.width * self.board.height))
+        shared_board_last_move = multiprocessing.Value('i', -1)
+        shared_board_current_player = multiprocessing.Value('i', start_player)
+        best_player_thread = multiprocessing.Process(
+                target=get_net_player_next_action,
+                args=(
+                    player1,
+                    0,
+                    shared_board_states,
+                    shared_board_availables,
+                    shared_board_last_move,
+                    shared_board_current_player,
+                    game_continue,
+                    winner,
+                    play_lock,
+                    net_lock,
+                    ),
+                )
+        current_player_thread = multiprocessing.Process(
+                target=get_net_player_next_action,
+                args=(
+                    player2,
+                    1,
+                    shared_board_states,
+                    shared_board_availables,
+                    shared_board_last_move,
+                    shared_board_current_player,
+                    game_continue,
+                    winner,
+                    play_lock,
+                    net_lock,
+                    ),
+                )
+        best_player_thread.start()
+        current_player_thread.start()
+        while best_player_thread.is_alive() or current_player_thread.is_alive():
+            time.sleep(1)
+        return winner.value
+            
     def start_self_play(self, player, is_shown=0, temp=1e-3):
         """ start a self-play game using a MCTS player, reuse the search tree,
         and store the self-play data: (state, mcts_probs, z) for training
         """
         self.board.init_board()
-        p1, p2 = self.board.players
         states, mcts_probs, current_players = [], [], []
         while True:
             move, move_probs = player.get_action(self.board,
@@ -252,7 +358,7 @@ class Game(object):
             # perform a move
             self.board.do_move(move)
             if is_shown:
-                self.graphic(self.board, p1, p2)
+                self.graphic(self.board)
             end, winner = self.board.game_end()
             if end:
                 # winner from the perspective of the current player of each state
