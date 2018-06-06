@@ -52,7 +52,7 @@ class Board(object):
         state shape: 4 * width * height
         """
         # square_state = np.zeros((4, self.width, self.height))
-        square_state = np.zeros((3, self.width, self.height))
+        square_state = np.zeros((4, self.width, self.height))
         if self.states:
             moves, players = np.array(list(zip(*self.states.items())))
             move_curr = moves[players == self.current_player]
@@ -64,10 +64,10 @@ class Board(object):
             square_state[1][move_oppo // self.width,
                             move_oppo % self.height] = 1.0
             # indicate the last move location
-            # 最后一个子的落子位置
-            #square_state[2][self.last_move // self.width,
-            #                self.last_move % self.height] = 1.0
-        square_state[2] = self.current_player
+            # 最后一个子的落子位置，作者说有利于优化训练结果，待验证
+            square_state[2][self.last_move // self.width,
+                            self.last_move % self.height] = 1.0
+        square_state[3] = self.current_player
         #if len(self.states) % 2 == 0:
         #    square_state[3][:, :] = 1.0  # indicate the colour to play
         #   square_state[2] = self.start_player  # indicate the current player

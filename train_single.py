@@ -24,8 +24,8 @@ logging.basicConfig(filename=log_name, level=logging.INFO, format="[%(levelname)
 class TrainPipeline():
     def __init__(self, init_model=None):
         # params of the board and the game
-        self.board_width = 12
-        self.board_height = 12
+        self.board_width = 8
+        self.board_height = 8
         self.n_in_row = 5
         self.board = Board(width=self.board_width,
                            height=self.board_height,
@@ -92,7 +92,7 @@ class TrainPipeline():
         for i in range(n_games):
             winner, play_data = self.game.start_self_play(self.mcts_player,
                                                           temp=self.temp)
-            play_data = list(play_data)[:]
+            play_data = list(play_data)
             self.episode_len = len(play_data)
             # augment the data
             play_data = self.get_equi_data(play_data)
@@ -138,13 +138,12 @@ class TrainPipeline():
             explained_var_old,
             explained_var_new))
         # summary for tensorboard
-        if index % 5 == 0:
-            self.policy_value_net.summary_record(
-                    state_batch,
-                    mcts_probs_batch,
-                    winner_batch,
-                    index,
-                    )
+        self.policy_value_net.summary_record(
+                state_batch,
+                mcts_probs_batch,
+                winner_batch,
+                index,
+                )
         return loss, entropy
 
     def policy_evaluate(self, n_games=10):
@@ -201,6 +200,7 @@ class TrainPipeline():
                             self.best_win_ratio = 0.0
         except KeyboardInterrupt:
             logging.error('quit')
+            print('quit')
 
 
 if __name__ == '__main__':

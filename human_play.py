@@ -16,7 +16,11 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 #model_file='model_record/best_policy_model_single'
-model_file='model_record/best_policy_model_multi'
+#model_file='model_record/best_policy_model_multi'
+#model_file='./single/best_policy_model'
+#model_file='./multi/best_policy_model'
+model_file='./multi_2/best_policy_model'
+
 import sys
 if len(sys.argv) >= 2:
     model_file = sys.argv[1]
@@ -60,16 +64,14 @@ def run():
         # load the trained policy_value_net in either Theano/Lasagne, PyTorch or TensorFlow
 
         best_policy = PolicyValueNet(width, height, model_file = model_file)
-        mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=2000)
-
-        # uncomment the following line to play with pure MCTS (it's much weaker even with a larger n_playout)
-        # mcts_player = MCTS_Pure(c_puct=5, n_playout=1000)
+        mcts_player = MCTSPlayer(best_policy.policy_value_fn, c_puct=5, n_playout=500)
 
         # human player, input your move in the format: 2,3
-        human = Human()
+        human1 = Human()
 
         # set start_player=0 for human first
-        game.start_play(human, mcts_player, start_player=1, is_shown=1)
+        game.start_play(human1, mcts_player, start_player=1, is_shown=1)
+        # game.start_play(human1, human2, start_player=0, is_shown=1)
     except KeyboardInterrupt:
         print('\n\rquit')
 

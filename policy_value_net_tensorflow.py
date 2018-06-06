@@ -40,7 +40,6 @@ class PolicyValueNet():
                                       data_format="channels_first",
                                       activation=tf.nn.relu)
         # 3-1 Action Networks
-        #print(self.conv3.get_shape())
         self.action_conv = tf.layers.conv2d(inputs=self.conv3,
                                             filters=4,
                                             kernel_size=[1, 1],
@@ -107,7 +106,7 @@ class PolicyValueNet():
 
         # Make a session
         config = tf.ConfigProto()
-        config.gpu_options.per_process_gpu_memory_fraction = 0.1
+        config.gpu_options.per_process_gpu_memory_fraction = 0.15
         config.gpu_options.allow_growth = False
         self.session = tf.Session(config=config)
 
