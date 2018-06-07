@@ -1,8 +1,6 @@
 /__pycache__
-/single.bak1
-/multi
-/single
-/multi_2
-nohup.out
+/single*
+/multi*
+nohup*
 
 *.bak

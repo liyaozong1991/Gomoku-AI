@@ -78,6 +78,8 @@ class Board(object):
 
     def do_move(self, move):
         self.states[move] = self.current_player
+        print(move)
+        print(self.availables)
         self.availables.remove(move)
         self.current_player = 1 - self.current_player
         self.last_move = move
@@ -263,7 +265,7 @@ class Game(object):
             local_board.init_board(start_player)
             with net_lock:
                 policy = PolicyValueNet(local_board.width, local_board.height, model_file=player)
-            mcts_player = MCTSPlayer(policy.policy_value_fn, c_puct=5, n_playout=400)
+            mcts_player = MCTSPlayer(policy.policy_value_fn, c_puct=5, n_playout=400, is_selfplay=0)
             while game_continue.value == 1:
                 if shared_board_current_player.value == i:
                     with play_lock:
@@ -303,6 +305,8 @@ class Game(object):
         # shared board states
         shared_board_states = m.dict()
         shared_board_availables = m.list(range(self.board.width * self.board.height))
+        for xx in shared_board_availables:
+            print(xx)
         shared_board_last_move = multiprocessing.Value('i', -1)
         shared_board_current_player = multiprocessing.Value('i', start_player)
         best_player_thread = multiprocessing.Process(

@@ -32,7 +32,6 @@ class TrainPipeline():
         self.n_in_row = 5
         # training params
         self.learn_rate = 2e-3
-        self.lr_multiplier = 1.0  # adaptively adjust the learning rate based on KL
         self.temp = 1.0  # the temperature param
         self.n_playout = 400  # num of simulations for each move
         self.c_puct = 5
@@ -111,7 +110,7 @@ class TrainPipeline():
                                     winner))
         return extend_data
 
-    def policy_update(self, current_policy_value_net, shared_queue, net_lock, data_lock, index):
+    def policy_update(self, current_policy_value_net, shared_queue, net_lock, data_lock, index, lr_multiplier):
         """update the policy-value net"""
         with data_lock:
             random_index = list(range(len(shared_queue)))
@@ -128,7 +127,7 @@ class TrainPipeline():
                     state_batch,
                     mcts_probs_batch,
                     winner_batch,
-                    self.learn_rate*self.lr_multiplier)
+                    self.learn_rate * lr_multiplier)
             new_probs, new_v = current_policy_value_net.policy_value(state_batch)
             kl = np.mean(np.sum(old_probs * (
                     np.log(old_probs + 1e-10) - np.log(new_probs + 1e-10)),
@@ -137,10 +136,10 @@ class TrainPipeline():
             if kl > self.kl_targ * 4:  # early stopping if D_KL diverges badly
                 break
         # adaptively adjust the learning rate
-        if kl > self.kl_targ * 2 and self.lr_multiplier > 0.1:
-            self.lr_multiplier /= 1.5
-        elif kl < self.kl_targ / 2 and self.lr_multiplier < 10:
-            self.lr_multiplier *= 1.5
+        if kl > self.kl_targ * 2 and lr_multiplier > 0.1:
+            lr_multiplier /= 1.5
+        elif kl < self.kl_targ / 2 and lr_multiplier < 10:
+            lr_multiplier *= 1.5
 
         explained_var_old = (1 -
                              np.var(np.array(winner_batch) - old_v.flatten()) /
@@ -150,7 +149,7 @@ class TrainPipeline():
                              np.var(np.array(winner_batch)))
         logging.info("update process kl:{:.5f},lr_multiplier:{:.3f},loss:{},entropy:{},explained_var_old:{:.3f},explained_var_new:{:.3f}".format(
             kl,
-            self.lr_multiplier,
+            lr_multiplier,
             loss,
             entropy,
             explained_var_old,
@@ -163,7 +162,7 @@ class TrainPipeline():
                     winner_batch,
                     index,
                     )
-        return
+        return lr_multiplier
 
     def update_net_thread(self, shared_queue, net_lock, data_lock, stop_update_process, update_best_model):
         os.environ["CUDA_VISIBLE_DEVICES"] = "1"
@@ -176,12 +175,13 @@ class TrainPipeline():
         best_win_ratio = 0
         get_enough_train_data = False
         global_update_step = 0
+        lr_multiplier = 1.0
         while stop_update_process.value == 0:
             time.sleep(1)
             if get_enough_train_data:
                 global_update_step += 1
                 logging.info('update process start {} th self train'.format(global_update_step))
-                self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock, global_update_step)
+                lr_multiplier = self.policy_update(current_policy_value_net, shared_queue, net_lock, data_lock, global_update_step, lr_multiplier)
                 logging.info('update process end {} th self train'.format(global_update_step))
                 # 这里更新最新模型文件
                 logging.info('update process ask net lock')

@@ -19,7 +19,8 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 #model_file='model_record/best_policy_model_multi'
 #model_file='./single/best_policy_model'
 #model_file='./multi/best_policy_model'
-model_file='./multi_2/best_policy_model'
+#model_file='./multi_2/best_policy_model'
+model_file='./multi_2/current_policy_model'
 
 import sys
 if len(sys.argv) >= 2:
