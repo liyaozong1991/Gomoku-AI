@@ -202,7 +202,7 @@ class MCTSPlayer(object):
                 #move = np.random.choice(acts, p=probs)
                 move = np.random.choice(
                     acts,
-                    p=(1-random_portion)*probs + random_portion*np.random.dirichlet(0.1*np.ones(len(probs)))
+                    p=0.95*probs + 0.05*np.random.dirichlet(0.05*np.ones(len(probs)))
                 )
                 # reset the root node
                 self.mcts.update_with_move(-1)

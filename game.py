@@ -78,8 +78,6 @@ class Board(object):
 
     def do_move(self, move):
         self.states[move] = self.current_player
-        print(move)
-        print(self.availables)
         self.availables.remove(move)
         self.current_player = 1 - self.current_player
         self.last_move = move
@@ -305,8 +303,6 @@ class Game(object):
         # shared board states
         shared_board_states = m.dict()
         shared_board_availables = m.list(range(self.board.width * self.board.height))
-        for xx in shared_board_availables:
-            print(xx)
         shared_board_last_move = multiprocessing.Value('i', -1)
         shared_board_current_player = multiprocessing.Value('i', start_player)
         best_player_thread = multiprocessing.Process(
